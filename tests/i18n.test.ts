@@ -24,7 +24,7 @@ describe('dictionaries', () => {
   });
 
   it('given pt-br, translates interpolated strings', () => {
-    expect(getMessages('pt-br').resultSummary(3, 50)).toBe('3 palpites · 50% precisão');
+    expect(getMessages('pt-br').resultSummary(3, 50, 2)).toBe('3 palpites · 50% precisão · 2 dicas');
   });
 
   it.each([
@@ -37,8 +37,8 @@ describe('dictionaries', () => {
     expect(getMessages(locale).meta('AWS', 4, guesses)).toBe(expected);
   });
 
-  it('given a single guess, uses the singular in the summary and share line', () => {
-    expect(getMessages('en').resultSummary(1, 100)).toBe('1 guess · 100% accuracy');
-    expect(getMessages('pt-br').shareStatsLine(1, 100)).toBe('🔎 1 palpite · 🎯 100% precisão');
+  it('given a single guess and hint, uses the singular in the summary and share line', () => {
+    expect(getMessages('en').resultSummary(1, 100, 1)).toBe('1 guess · 100% accuracy · 1 hint');
+    expect(getMessages('pt-br').shareStatsLine(1, 100, 1)).toBe('🔎 1 palpite · 🎯 100% precisão · 💡 1 dica');
   });
 });

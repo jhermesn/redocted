@@ -16,7 +16,7 @@ const throwingStore: KeyValueStore = {
   },
 };
 
-const played = { guesses: ['s3'], solved: false, gaveUp: false };
+const played = { guesses: ['s3'], hints: ['bucket'], solved: false, gaveUp: false };
 
 describe('game state persistence', () => {
   const slot = { corpus: 'aws', puzzle: 7, articleId: 'k1' } as const;
@@ -45,7 +45,13 @@ describe('game state persistence', () => {
     expect(() => saveState(throwingStore, slot, played)).not.toThrow();
   });
 
-  it.each(['{not json', '{"guesses":"s3","solved":false,"gaveUp":false}', '{"guesses":[1],"solved":false,"gaveUp":false}', 'null'])(
+  it('given a game saved before hints existed, loads it with no hints', () => {
+    const store = memoryStore();
+    store.setItem('redocted:v1:aws:game:7:k1', '{"guesses":["s3"],"solved":false,"gaveUp":false}');
+    expect(loadState(store, slot)).toEqual({ guesses: ['s3'], hints: [], solved: false, gaveUp: false });
+  });
+
+  it.each(['{"guesses":[],"hints":"s3","solved":false,"gaveUp":false}', '{not json', '{"guesses":"s3","solved":false,"gaveUp":false}', '{"guesses":[1],"solved":false,"gaveUp":false}', 'null'])(
     'given corrupted value %s, returns an empty game',
     (raw) => {
       const store = memoryStore();
@@ -124,7 +130,7 @@ describe('settings persistence', () => {
 });
 
 describe('countsTowardStats', () => {
-  const playing = { guesses: ['a'], solved: false, gaveUp: false };
+  const playing = { guesses: ['a'], hints: [], solved: false, gaveUp: false };
   const solved = { ...playing, solved: true };
 
   it("given today's puzzle that just ended, counts it", () => {

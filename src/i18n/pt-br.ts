@@ -2,6 +2,7 @@ import type { Messages } from './en.ts';
 import { plural } from './plural.ts';
 
 const guessCount = (guesses: number): string => plural('pt-BR', guesses, { one: 'palpite', other: 'palpites' });
+const hintCount = (hints: number): string => plural('pt-BR', hints, { one: 'dica', other: 'dicas' });
 
 export const ptBr: Messages = {
   languageName: 'Português',
@@ -17,10 +18,11 @@ export const ptBr: Messages = {
   guessSubmit: 'Chutar',
   giveUp: 'Desistir',
   giveUpConfirm: 'Toque de novo para desistir',
+  hint: 'Dica',
   previous: '← anterior',
   howToPlayTitle: 'Como jogar',
   howToPlayBody:
-    'Uma página da documentação está escondida atrás de tarjas. Cada palavra que você chuta é revelada em todos os lugares onde aparece. Revele todas as palavras do título para vencer. Palavras comuns e números já aparecem. Os artigos são em inglês, então chute em inglês. Novo desafio todo dia às 00:00 UTC.',
+    'Uma página da documentação está escondida atrás de tarjas. Cada palavra que você chuta é revelada em todos os lugares onde aparece. Revele todas as palavras do título para vencer. Travou? Cada dica revela uma palavra do texto, nunca uma do título. Palavras comuns e números já aparecem. Os artigos são em inglês, então chute em inglês. Novo desafio todo dia às 00:00 UTC.',
   columnNumber: '#',
   columnWord: 'Palavra',
   columnHits: 'Ocorrências',
@@ -28,12 +30,15 @@ export const ptBr: Messages = {
   feedbackVisible: 'Essa palavra já aparece no texto.',
   feedbackRepeat: (key) => `Você já tentou “${key}”.`,
   feedbackHits: (hits) => (hits === 0 ? 'Nenhuma ocorrência.' : `${plural('pt-BR', hits, { one: 'ocorrência', other: 'ocorrências' })}.`),
+  feedbackHint: (word, hits) => `Dica: “${word}” (${plural('pt-BR', hits, { one: 'ocorrência', other: 'ocorrências' })}).`,
   meta: (corpusLabel, puzzle, guesses) => `${corpusLabel} #${puzzle} · ${guessCount(guesses)}`,
   resultSolved: (title) => `Você acertou: ${title}`,
   resultGaveUp: (title) => `Era: ${title}`,
-  resultSummary: (guesses, percent) => `${guessCount(guesses)} · ${percent}% precisão`,
+  resultSummary: (guesses, percent, hints) => `${guessCount(guesses)} · ${percent}% precisão · ${hintCount(hints)}`,
   resultStats: (played, won, streak, maxStreak) => `Jogos: ${played} · Vitórias: ${won} · Sequência: ${streak} (máx. ${maxStreak})`,
-  shareStatsLine: (guesses, percent) => `🔎 ${guessCount(guesses)} · 🎯 ${percent}% precisão`,
+  shareStatsLine: (guesses, percent, hints) => `🔎 ${guessCount(guesses)} · 🎯 ${percent}% precisão · 💡 ${hintCount(hints)}`,
+  shareSolved: (corpusLabel) => `Desvendei uma página tarjada da documentação ${corpusLabel}. Consegue fazer melhor?`,
+  shareGaveUp: (corpusLabel) => `Essa página tarjada da documentação ${corpusLabel} me venceu. Você consegue desvendar?`,
   readSource: 'Ler na documentação oficial ↗',
   attribution: (license) => `Texto: ${license} · Trecho adaptado para o jogo`,
   redactedWord: (letters) => `palavra escondida, ${plural('pt-BR', letters, { one: 'letra', other: 'letras' })}`,
@@ -44,6 +49,9 @@ export const ptBr: Messages = {
   share: 'Copiar resultado',
   shareCopied: 'Copiado!',
   shareFailed: 'Não foi possível copiar.',
+  shareOnLabel: 'Compartilhar no',
+  shareOnNetwork: (network) => `Compartilhar no ${network}`,
+  shareNative: 'Compartilhar…',
   close: 'Fechar',
   footerBy: 'Um jogo de',
   footerNote: 'Sem vínculo com a AWS ou a CNCF. Cada artigo mostra sua licença e, ao fim do jogo, o link da fonte.',

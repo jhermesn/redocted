@@ -1,9 +1,9 @@
 import { getMessages, parseLocale, type Messages } from '../i18n/index.ts';
 import { CORPUS_LABEL, parseCorpus } from '../lib/corpora.ts';
 import { articleIdFor, currentPuzzle, resolvePuzzle } from '../lib/daily.ts';
-import { accuracy, applyGuess, buildPuzzle, giveUp, hitsFor, type GameState, type GuessResult, type Puzzle } from '../lib/game.ts';
+import { accuracy, applyGuess, buildPuzzle, giveUp, hitsFor, takeHint, type GameState, type GuessResult, type Puzzle } from '../lib/game.ts';
 import { renderArticle } from '../lib/render.ts';
-import { shareText } from '../lib/share.ts';
+import { shareLinks, shareText, type ShareInput } from '../lib/share.ts';
 import { countsTowardStats, currentStreak, loadSettings, loadState, loadStats, recordResult, saveSettings, saveState, saveStats, type KeyValueStore } from '../lib/storage.ts';
 import * as v from 'valibot';
 import { ArticleSchema, CorpusIndexSchema } from '../lib/schemas.ts';
@@ -101,6 +101,27 @@ function renderGuessList(state: GameState, puzzle: Puzzle, onSelect: (word: stri
   byId('guess-list').replaceChildren(...rows.reverse());
 }
 
+function renderShareLinks(input: ShareInput): void {
+  const items = shareLinks(input, t).map(({ network, href }) => {
+    const link = Object.assign(document.createElement('a'), { href, textContent: network, target: '_blank', rel: 'noopener noreferrer', className: 'btn-ghost' });
+    link.setAttribute('aria-label', t.shareOnNetwork(network));
+    const item = document.createElement('li');
+    item.append(link);
+    return item;
+  });
+  byId('share-links').replaceChildren(...items);
+}
+
+// The Web Share API reaches every app installed on the device, mostly on mobile.
+function setUpNativeShare(input: ShareInput): void {
+  const button = byId<HTMLButtonElement>('share-native');
+  const data = { text: shareText(input, t) };
+  button.hidden = typeof navigator.share !== 'function' || !navigator.canShare?.(data);
+  button.onclick = () => {
+    navigator.share(data).catch(() => undefined);
+  };
+}
+
 async function main(): Promise<void> {
   const params = new URLSearchParams(window.location.search);
   const corpus = parseCorpus(params.get('c'));
@@ -147,6 +168,7 @@ async function main(): Promise<void> {
       delete giveUpButton.dataset.armed;
       giveUpButton.textContent = t.giveUp;
     }
+    byId<HTMLButtonElement>('hint').disabled = takeHint(state, board) === null;
     input.disabled = finished;
     byId<HTMLButtonElement>('guess-submit').disabled = finished;
     byId('show-result').hidden = !finished;
@@ -164,21 +186,23 @@ async function main(): Promise<void> {
   function showResult(): void {
     const ratio = accuracy(state, board);
     const stats = loadStats(store, corpus);
+    const shareInput = { corpus, puzzle, state, accuracyRatio: ratio, url: `${window.location.origin}${window.location.pathname}?c=${corpus}&p=${puzzle}` };
     byId('result-title').textContent = state.solved ? t.resultSolved(article.title) : t.resultGaveUp(article.title);
-    byId('result-summary').textContent = t.resultSummary(state.guesses.length, Math.round(ratio * 100));
+    byId('result-summary').textContent = t.resultSummary(state.guesses.length, Math.round(ratio * 100), state.hints.length);
     byId('result-stats').textContent = t.resultStats(stats.played, stats.won, currentStreak(stats, today), stats.maxStreak);
     byId<HTMLAnchorElement>('result-source').href = article.sourceUrl;
     const shareButton = byId<HTMLButtonElement>('share');
     shareButton.textContent = t.share;
     shareButton.onclick = async () => {
-      const url = `${window.location.origin}${window.location.pathname}?c=${corpus}&p=${puzzle}`;
       try {
-        await navigator.clipboard.writeText(shareText({ corpus, puzzle, state, accuracyRatio: ratio, url }, t));
+        await navigator.clipboard.writeText(shareText(shareInput, t));
         shareButton.textContent = t.shareCopied;
       } catch {
         shareButton.textContent = t.shareFailed;
       }
     };
+    setUpNativeShare(shareInput);
+    renderShareLinks(shareInput);
     if (!dialog.open) dialog.showModal();
   }
 
@@ -205,6 +229,16 @@ async function main(): Promise<void> {
     }
     commit(next);
     if (revealsSomething) focusNextHit();
+  });
+
+  byId('hint').addEventListener('click', () => {
+    const hint = takeHint(state, board);
+    if (hint === null) return;
+    byId('feedback').textContent = t.feedbackHint(hint.word, hitsFor(board, hint.word));
+    highlight = hint.word;
+    hitCursor = -1;
+    commit(hint.state);
+    focusNextHit();
   });
 
   // Two taps: a stray tap must not end the game and the streak.

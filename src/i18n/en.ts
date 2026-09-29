@@ -1,6 +1,7 @@
 import { plural } from './plural.ts';
 
 const guessCount = (guesses: number): string => plural('en', guesses, { one: 'guess', other: 'guesses' });
+const hintCount = (hints: number): string => plural('en', hints, { one: 'hint', other: 'hints' });
 
 export const en = {
   languageName: 'English',
@@ -16,10 +17,11 @@ export const en = {
   guessSubmit: 'Guess',
   giveUp: 'Give up',
   giveUpConfirm: 'Tap again to give up',
+  hint: 'Hint',
   previous: '← previous',
   howToPlayTitle: 'How to play',
   howToPlayBody:
-    'A documentation page is hidden behind black bars. Every word you guess is revealed everywhere it appears. Reveal every word of the title to win. Common words and numbers are already visible. The articles are in English. New puzzle every day at 00:00 UTC.',
+    'A documentation page is hidden behind black bars. Every word you guess is revealed everywhere it appears. Reveal every word of the title to win. Stuck? A hint reveals one word of the text at a time, never a title word. Common words and numbers are already visible. The articles are in English. New puzzle every day at 00:00 UTC.',
   columnNumber: '#',
   columnWord: 'Word',
   columnHits: 'Hits',
@@ -27,13 +29,16 @@ export const en = {
   feedbackVisible: 'That word is already visible.',
   feedbackRepeat: (key: string): string => `You already tried “${key}”.`,
   feedbackHits: (hits: number): string => (hits === 0 ? 'No matches.' : `${plural('en', hits, { one: 'match', other: 'matches' })}.`),
+  feedbackHint: (word: string, hits: number): string => `Hint: “${word}” (${plural('en', hits, { one: 'match', other: 'matches' })}).`,
   meta: (corpusLabel: string, puzzle: number, guesses: number): string => `${corpusLabel} #${puzzle} · ${guessCount(guesses)}`,
   resultSolved: (title: string): string => `You got it: ${title}`,
   resultGaveUp: (title: string): string => `It was: ${title}`,
-  resultSummary: (guesses: number, percent: number): string => `${guessCount(guesses)} · ${percent}% accuracy`,
+  resultSummary: (guesses: number, percent: number, hints: number): string => `${guessCount(guesses)} · ${percent}% accuracy · ${hintCount(hints)}`,
   resultStats: (played: number, won: number, streak: number, maxStreak: number): string =>
     `Played: ${played} · Won: ${won} · Streak: ${streak} (best ${maxStreak})`,
-  shareStatsLine: (guesses: number, percent: number): string => `🔎 ${guessCount(guesses)} · 🎯 ${percent}% accuracy`,
+  shareStatsLine: (guesses: number, percent: number, hints: number): string => `🔎 ${guessCount(guesses)} · 🎯 ${percent}% accuracy · 💡 ${hintCount(hints)}`,
+  shareSolved: (corpusLabel: string): string => `I uncovered a redacted ${corpusLabel} docs page. Can you beat my score?`,
+  shareGaveUp: (corpusLabel: string): string => `This redacted ${corpusLabel} docs page beat me. Can you crack it?`,
   readSource: 'Read the official docs ↗',
   attribution: (license: string): string => `Text: ${license} · Excerpt, modified for this game`,
   redactedWord: (letters: number): string => `hidden word, ${plural('en', letters, { one: 'letter', other: 'letters' })}`,
@@ -44,6 +49,9 @@ export const en = {
   share: 'Copy result',
   shareCopied: 'Copied!',
   shareFailed: "Couldn't copy.",
+  shareOnLabel: 'Share on',
+  shareOnNetwork: (network: string): string => `Share on ${network}`,
+  shareNative: 'Share…',
   close: 'Close',
   footerBy: 'A game by',
   footerNote: 'Not affiliated with AWS or the CNCF. Every article shows its license, and links its source once the game is over.',
