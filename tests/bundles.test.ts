@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { bundleKey, pagesToBuild } from '../scripts/corpus/bundles.ts';
+import { bundleKey, corpusIndexOf, pagesToBuild } from '../scripts/corpus/bundles.ts';
 
 const pages = [
   { id: 'lambda', docsUrl: 'https://example.com/lambda' },
@@ -30,5 +30,15 @@ describe('pagesToBuild', () => {
 
   it('given an explicit refresh, rebuilds pages that are not in a started season', () => {
     expect(pagesToBuild('aws', pages, { existingFiles: allExisting, refresh: true, frozenIds: new Set(['lambda']) })).toEqual([pages[1]]);
+  });
+});
+
+describe('corpusIndexOf', () => {
+  it('given a manifest, lists each season with its pages as opaque keys in play order', () => {
+    const source = { corpus: 'aws' as const, license: 'x', seasons: [{ startPuzzle: 1, salt: 's1', pages }] };
+    expect(corpusIndexOf(source)).toEqual({
+      corpus: 'aws',
+      seasons: [{ startPuzzle: 1, salt: 's1', ids: [bundleKey('aws', 'lambda'), bundleKey('aws', 's3')] }],
+    });
   });
 });

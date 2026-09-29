@@ -46,15 +46,13 @@ jobs:
         uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8.1.1
         with:
           branch: corpus/next
-          add-paths: |
-            corpus
-            public/corpus
+          add-paths: corpus
           commit-message: 'feat(corpus): add newly discovered documentation pages'
           title: 'feat(corpus): add newly discovered documentation pages'
           body: >-
             New articles found in the documentation sitemaps, added as a new
             season. Merge before the season starts (see `startPuzzle` in
-            `corpus/sources/`); after that, CI and the deploy refuse it and
+            `corpus/<board>/manifest.json`); after that, CI and the deploy refuse it and
             this workflow has to run again.
 
       # Pull requests opened with GITHUB_TOKEN do not start other workflows.

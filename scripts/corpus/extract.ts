@@ -2,7 +2,7 @@ import { parseHTML } from 'linkedom';
 import { tokenize } from '../../src/lib/normalize.ts';
 import type { Block, BlockKind, CorpusId } from '../../src/lib/types.ts';
 
-export const MAX_BODY_WORDS = 700;
+const MAX_BODY_WORDS = 700;
 
 export interface ExtractedArticle {
   title: string;

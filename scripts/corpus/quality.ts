@@ -2,7 +2,7 @@ import { sharesLemma } from '../../src/lib/game.ts';
 import { isVisible, lemmasOf, tokenize, type Token } from '../../src/lib/normalize.ts';
 import type { Article } from '../../src/lib/types.ts';
 
-export const MIN_BODY_WORDS = 150;
+const MIN_BODY_WORDS = 150;
 
 // An article makes a fair puzzle only if there is enough text to reason from
 // and every title word can be discovered from the text around it.

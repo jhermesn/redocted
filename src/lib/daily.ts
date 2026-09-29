@@ -3,7 +3,7 @@ import type { CorpusIndex } from './types.ts';
 const DAY_MS = 86_400_000;
 const PUZZLE_PARAM = /^\d{1,6}$/;
 
-export const EPOCH_UTC_MS = Date.UTC(2026, 9, 1);
+const EPOCH_UTC_MS = Date.UTC(2026, 9, 1);
 
 export function puzzleNumberFor(date: Date): number {
   return Math.floor((date.getTime() - EPOCH_UTC_MS) / DAY_MS) + 1;

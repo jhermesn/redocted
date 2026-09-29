@@ -6,7 +6,7 @@ the player's browser. Please report privately:
 - a way to run script or inject markup in the page, for example through an
   article, a guess, a URL parameter or data in `localStorage`;
 - a way for the corpus builder (`npm run corpus`) to be tricked into writing
-  outside `public/corpus/` or fetching from sites other than the documentation
+  outside `corpus/` or fetching from sites other than the documentation
   sources;
 - a compromised or malicious dependency or GitHub Action in this repository.
 
