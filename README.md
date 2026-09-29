@@ -26,10 +26,13 @@ does the same with Wikipedia.
   like `don't`.
 - Tap a black bar to see how many letters it hides, or turn on "Show letter
   counts" to see them all. Screen readers announce each hidden word's length.
+- Stuck? **Hint** reveals one word of the text at a time, the one with the
+  most matches first. Hints never reveal a title word and never count as
+  guesses.
 - When you solve or give up, the whole article is revealed: close the result to
   read it, with a link to the official page.
-- Fewer guesses is better. The game also tracks accuracy: the share of guesses
-  that revealed at least one word.
+- Fewer guesses is better. The game also tracks accuracy (the share of guesses
+  that revealed at least one word) and the hints you used.
 - A new puzzle comes out every day at 00:00 UTC, the same for everyone. Two
   boards: **AWS** and **Kubernetes**. Earlier puzzles stay playable.
 

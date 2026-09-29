@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { accuracy, applyGuess, buildPuzzle, EMPTY_STATE, giveUp, hitsFor, isRevealed, type GameState } from '../src/lib/game.ts';
+import { accuracy, applyGuess, buildPuzzle, EMPTY_STATE, giveUp, hitsFor, isRevealed, takeHint, type GameState } from '../src/lib/game.ts';
 import type { Article } from '../src/lib/types.ts';
 
 const article: Article = {
@@ -131,5 +131,38 @@ describe('accuracy', () => {
 
   it('given one hit and one miss, returns 0.5', () => {
     expect(accuracy(play('bucket', 'kubernetes'), puzzle)).toBe(0.5);
+  });
+});
+
+describe('takeHint', () => {
+  it('given a fresh game, reveals the hidden body word with the most hits that is not in the title', () => {
+    const hint = takeHint(EMPTY_STATE, puzzle);
+    expect(hint?.word).toBe('objects');
+    expect(hint?.state.hints).toEqual(['objects']);
+    expect(hint?.state.guesses).toEqual([]);
+  });
+
+  it('given a hint, reveals every form sharing its lemma', () => {
+    const state = takeHint(EMPTY_STATE, puzzle)?.state ?? EMPTY_STATE;
+    expect(isRevealed(state, puzzle, 'object')).toBe(true);
+  });
+
+  it('given a word already guessed, skips it', () => {
+    expect(takeHint(play('objects'), puzzle)?.word).toBe('buckets');
+  });
+
+  it('given every body word revealed, returns null instead of revealing a title word', () => {
+    const exhausted = puzzle.hintWords.reduce((state) => takeHint(state, puzzle)?.state ?? state, EMPTY_STATE);
+    expect(takeHint(exhausted, puzzle)).toBeNull();
+    expect(isRevealed(exhausted, puzzle, 'Amazon')).toBe(false);
+  });
+
+  it('given a finished game, returns null', () => {
+    expect(takeHint(giveUp(EMPTY_STATE), puzzle)).toBeNull();
+  });
+
+  it('given a guess of a hinted word, returns visible without counting a guess', () => {
+    const state = takeHint(EMPTY_STATE, puzzle)?.state ?? EMPTY_STATE;
+    expect(applyGuess(state, puzzle, 'object')).toEqual({ state, result: { kind: 'visible' } });
   });
 });

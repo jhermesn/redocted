@@ -1,7 +1,7 @@
 import { getMessages, parseLocale, type Messages } from '../i18n/index.ts';
 import { CORPUS_LABEL, parseCorpus } from '../lib/corpora.ts';
 import { articleIdFor, currentPuzzle, resolvePuzzle } from '../lib/daily.ts';
-import { accuracy, applyGuess, buildPuzzle, giveUp, hitsFor, type GameState, type GuessResult, type Puzzle } from '../lib/game.ts';
+import { accuracy, applyGuess, buildPuzzle, giveUp, hitsFor, takeHint, type GameState, type GuessResult, type Puzzle } from '../lib/game.ts';
 import { renderArticle } from '../lib/render.ts';
 import { shareText } from '../lib/share.ts';
 import { countsTowardStats, currentStreak, loadSettings, loadState, loadStats, recordResult, saveSettings, saveState, saveStats, type KeyValueStore } from '../lib/storage.ts';
@@ -147,6 +147,7 @@ async function main(): Promise<void> {
       delete giveUpButton.dataset.armed;
       giveUpButton.textContent = t.giveUp;
     }
+    byId<HTMLButtonElement>('hint').disabled = takeHint(state, board) === null;
     input.disabled = finished;
     byId<HTMLButtonElement>('guess-submit').disabled = finished;
     byId('show-result').hidden = !finished;
@@ -164,16 +165,16 @@ async function main(): Promise<void> {
   function showResult(): void {
     const ratio = accuracy(state, board);
     const stats = loadStats(store, corpus);
+    const shareInput = { corpus, puzzle, state, accuracyRatio: ratio, url: `${window.location.origin}${window.location.pathname}?c=${corpus}&p=${puzzle}` };
     byId('result-title').textContent = state.solved ? t.resultSolved(article.title) : t.resultGaveUp(article.title);
-    byId('result-summary').textContent = t.resultSummary(state.guesses.length, Math.round(ratio * 100));
+    byId('result-summary').textContent = t.resultSummary(state.guesses.length, Math.round(ratio * 100), state.hints.length);
     byId('result-stats').textContent = t.resultStats(stats.played, stats.won, currentStreak(stats, today), stats.maxStreak);
     byId<HTMLAnchorElement>('result-source').href = article.sourceUrl;
     const shareButton = byId<HTMLButtonElement>('share');
     shareButton.textContent = t.share;
     shareButton.onclick = async () => {
-      const url = `${window.location.origin}${window.location.pathname}?c=${corpus}&p=${puzzle}`;
       try {
-        await navigator.clipboard.writeText(shareText({ corpus, puzzle, state, accuracyRatio: ratio, url }, t));
+        await navigator.clipboard.writeText(shareText(shareInput, t));
         shareButton.textContent = t.shareCopied;
       } catch {
         shareButton.textContent = t.shareFailed;
@@ -205,6 +206,16 @@ async function main(): Promise<void> {
     }
     commit(next);
     if (revealsSomething) focusNextHit();
+  });
+
+  byId('hint').addEventListener('click', () => {
+    const hint = takeHint(state, board);
+    if (hint === null) return;
+    byId('feedback').textContent = t.feedbackHint(hint.word, hitsFor(board, hint.word));
+    highlight = hint.word;
+    hitCursor = -1;
+    commit(hint.state);
+    focusNextHit();
   });
 
   // Two taps: a stray tap must not end the game and the streak.

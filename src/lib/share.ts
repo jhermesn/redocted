@@ -15,7 +15,7 @@ export function shareText({ corpus, puzzle, state, accuracyRatio, url }: ShareIn
   const outcome = state.solved ? '✅' : '🏳️';
   return [
     `Redocted ${CORPUS_LABEL[corpus]} #${puzzle} ${outcome}`,
-    messages.shareStatsLine(state.guesses.length, Math.round(accuracyRatio * 100)),
+    messages.shareStatsLine(state.guesses.length, Math.round(accuracyRatio * 100), state.hints.length),
     url,
   ].join('\n');
 }

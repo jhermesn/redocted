@@ -71,8 +71,9 @@ const t = getMessages(locale);
         <tbody id="guess-list"></tbody>
       </table>
 
-      <div class="mt-4 flex gap-2 text-sm">
+      <div class="mt-4 flex flex-wrap gap-2 text-sm">
         <a id="prev" class="btn-ghost">{t.previous}</a>
+        <button id="hint" class="btn-ghost" type="button">💡 {t.hint}</button>
         <button id="give-up" class="btn-ghost" type="button">{t.giveUp}</button>
         <button id="show-result" class="btn-ghost" type="button" hidden>{t.showResult}</button>
       </div>

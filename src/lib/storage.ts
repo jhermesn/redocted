@@ -27,7 +27,13 @@ export interface Settings {
   showLetterCounts: boolean;
 }
 
-const GameStateSchema = v.object({ guesses: v.array(v.string()), solved: v.boolean(), gaveUp: v.boolean() });
+// Games saved before hints existed have no `hints` key and must still load.
+const GameStateSchema = v.object({
+  guesses: v.array(v.string()),
+  hints: v.optional(v.array(v.string()), []),
+  solved: v.boolean(),
+  gaveUp: v.boolean(),
+});
 const CountSchema = v.pipe(v.number(), v.integer(), v.minValue(0));
 const StatsSchema = v.object({
   played: CountSchema,
