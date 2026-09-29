@@ -30,6 +30,7 @@
     "@astrojs/sitemap": "^3.7.4",
     "@tailwindcss/vite": "^4.3.3",
     "astro": "^7.3.5",
+    "country-flag-icons": "^1.6.20",
     "escape-html": "^1.0.3",
     "stopword": "^3.1.5",
     "tailwindcss": "^4.3.3",

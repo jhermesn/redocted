@@ -1,6 +1,7 @@
 ---
 import { getRelativeLocaleUrl } from 'astro:i18n';
-import { getMessages, HTML_LANG, LOCALES, parseLocale } from '../i18n/index.ts';
+import * as flags from 'country-flag-icons/string/3x2';
+import { FLAG_COUNTRY, getMessages, HTML_LANG, LOCALES, parseLocale } from '../i18n/index.ts';
 import { CORPORA, CORPUS_LABEL } from '../lib/corpora.ts';
 import { MAX_GUESS_LENGTH } from '../lib/game.ts';
 import pkg from '../../package.json';
@@ -23,14 +24,16 @@ const t = getMessages(locale);
         {
           LOCALES.map((option) => (
             <a
-              class="tab"
+              class="tab flag-tab"
               data-locale-link
               href={getRelativeLocaleUrl(option)}
               hreflang={HTML_LANG[option]}
               lang={HTML_LANG[option]}
+              title={getMessages(option).languageName}
               aria-current={option === locale ? 'page' : undefined}
             >
-              {getMessages(option).languageName}
+              <span class="flag" aria-hidden="true" set:html={flags[FLAG_COUNTRY[option]]} />
+              <span class="sr-only">{getMessages(option).languageName}</span>
             </a>
           ))
         }
