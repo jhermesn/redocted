@@ -6,7 +6,7 @@ import pkg from '../package.json' with { type: 'json' };
 import { CORPORA } from '../src/lib/corpora.ts';
 import { currentPuzzle } from '../src/lib/daily.ts';
 import { isAlwaysVisible, tokenize } from '../src/lib/normalize.ts';
-import type { Article, CorpusId, CorpusIndex } from '../src/lib/types.ts';
+import type { Article, CorpusId } from '../src/lib/types.ts';
 import { acceptArticles } from './corpus/accept.ts';
 import { bundleKey, pagesToBuild } from './corpus/bundles.ts';
 import { awsGuideRoots, awsLandingUrl, k8sConceptPages, type FetchedPage } from './corpus/discover.ts';
@@ -126,9 +126,9 @@ async function discoverCandidates(corpus: CorpusId, knownIds: ReadonlySet<string
 }
 
 async function buildCorpus(corpus: CorpusId, refresh: boolean): Promise<void> {
-  const sourcePath = `corpus/sources/${corpus}.json`;
+  const sourcePath = `corpus/${corpus}/manifest.json`;
   const source = parseSourceFile(JSON.parse(await readFile(sourcePath, 'utf8')));
-  const outDir = `public/corpus/${corpus}`;
+  const outDir = `corpus/${corpus}/articles`;
   await mkdir(outDir, { recursive: true });
 
   await buildKnownPages(source, outDir, refresh);
@@ -158,12 +158,7 @@ async function buildCorpus(corpus: CorpusId, refresh: boolean): Promise<void> {
   const seasons = [...withNewPages(corpus, source.seasons, newPages, { today: currentPuzzle(new Date()), leadDays: LEAD_DAYS, retiredIds })];
   console.log(`${corpus}: ${accepted.length} new pages, ${retiredIds.size} retired, ${seasons.at(-1)?.pages.length ?? 0} in the latest season`);
 
-  const index: CorpusIndex = {
-    corpus,
-    seasons: seasons.map((season) => ({ startPuzzle: season.startPuzzle, salt: season.salt, ids: season.pages.map((page) => bundleKey(corpus, page.id)) })),
-  };
   await writeFile(sourcePath, `${JSON.stringify({ ...source, seasons }, null, 2)}\n`);
-  await writeFile(`${outDir}/index.json`, `${JSON.stringify(index, null, 2)}\n`);
 }
 
 const { values, positionals } = parseArgs({ options: { refresh: { type: 'boolean', default: false } }, allowPositionals: true });

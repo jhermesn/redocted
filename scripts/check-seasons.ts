@@ -3,11 +3,17 @@ import { readFile } from 'node:fs/promises';
 import { basename } from 'node:path';
 import { CORPORA } from '../src/lib/corpora.ts';
 import { currentPuzzle } from '../src/lib/daily.ts';
+import { corpusIndexOf } from './corpus/bundles.ts';
+import { parseSourceFile } from './corpus/source.ts';
 import type { CorpusIndex } from '../src/lib/types.ts';
 import { bundleChangeProblems, seasonChangeProblems } from './corpus/seasons.ts';
 
 function git(...args: string[]): string {
   return execFileSync('git', args, { encoding: 'utf8' });
+}
+
+function indexOf(manifestJson: string): CorpusIndex {
+  return corpusIndexOf(parseSourceFile(JSON.parse(manifestJson)));
 }
 
 function indexAt(ref: string, path: string): CorpusIndex | null {
@@ -16,13 +22,13 @@ function indexAt(ref: string, path: string): CorpusIndex | null {
   } catch {
     return null;
   }
-  return JSON.parse(git('show', `${ref}:${path}`)) as CorpusIndex;
+  return indexOf(git('show', `${ref}:${path}`));
 }
 
 function changedBundleKeys(ref: string, dir: string): string[] {
   return git('diff', '--name-only', ref, '--', dir)
     .split('\n')
-    .filter((path) => path.endsWith('.json') && basename(path) !== 'index.json')
+    .filter((path) => path.endsWith('.json'))
     .map((path) => basename(path, '.json'));
 }
 
@@ -34,10 +40,10 @@ git('rev-parse', '--verify', `${baseRef}^{commit}`);
 const today = currentPuzzle(new Date());
 const problems: string[] = [];
 for (const corpus of CORPORA) {
-  const dir = `public/corpus/${corpus}`;
-  const before = indexAt(baseRef, `${dir}/index.json`);
-  const after = JSON.parse(await readFile(`${dir}/index.json`, 'utf8')) as CorpusIndex;
-  problems.push(...seasonChangeProblems(before, after, today), ...bundleChangeProblems(before, changedBundleKeys(baseRef, dir), today));
+  const manifest = `corpus/${corpus}/manifest.json`;
+  const before = indexAt(baseRef, manifest);
+  const after = indexOf(await readFile(manifest, 'utf8'));
+  problems.push(...seasonChangeProblems(before, after, today), ...bundleChangeProblems(before, changedBundleKeys(baseRef, `corpus/${corpus}/articles`), today));
 }
 
 if (problems.length > 0) {

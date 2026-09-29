@@ -16,7 +16,7 @@ export function foldWord(word: string): string {
   return word.normalize('NFD').replace(/\p{M}/gu, '').replace(/’/g, "'").toLowerCase();
 }
 
-export const STOPWORDS: ReadonlySet<string> = new Set(eng);
+const STOPWORDS: ReadonlySet<string> = new Set(eng);
 
 export function isWord(text: string): boolean {
   return WORD.test(text);
