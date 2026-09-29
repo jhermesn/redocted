@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.7.0](https://github.com/jhermesn/redocted/compare/v0.6.0...v0.7.0) (2026-09-29)
+
+
+### Features
+
+* add hints that reveal one word of the text at a time ([a9940af](https://github.com/jhermesn/redocted/commit/a9940aff9216cf44984dd5125ca7932da9cdfe2c))
+* share the result on social networks ([b64615b](https://github.com/jhermesn/redocted/commit/b64615b08b3423333ef3eb7b9eb8fccfd401d5ea))
+
 ## [0.6.0](https://github.com/jhermesn/redocted/compare/v0.5.0...v0.6.0) (2026-09-29)
 
 
