@@ -82,7 +82,7 @@ word appears in the text. The builder also stores, for each article, which
 word forms share a dictionary form (WordNet, via `wink-lemmatizer`), so the
 browser matches guesses without shipping a dictionary.
 
-Articles are committed under `public/corpus/`, so building the site never needs
+Articles are committed under `corpus/`, so building the site never needs
 the network, and an article never changes once it is published. Once a month a
 GitHub Action runs the discovery and opens (or updates) a pull request with the
 new pages as the next season. If a documentation site changes its sitemap or

@@ -42,7 +42,7 @@ const PREFIX = 'redocted:v1';
 const SETTINGS_KEY = `${PREFIX}:settings`;
 
 export const EMPTY_STATS: Stats = { played: 0, won: 0, streak: 0, maxStreak: 0, lastWonPuzzle: null };
-export const DEFAULT_SETTINGS: Settings = { showLetterCounts: false };
+const DEFAULT_SETTINGS: Settings = { showLetterCounts: false };
 
 export function loadState(store: KeyValueStore | null, slot: GameSlot): GameState {
   return readValid(store, gameKey(slot), GameStateSchema) ?? EMPTY_STATE;
