@@ -1,0 +1,18 @@
+---
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<svg
+  viewBox="0 0 2580 3870"
+  class:list={['fill-current', className]}
+  aria-hidden="true"
+  focusable="false"
+>
+  <path
+    d="M2150 860H1720V1720H2580V2150H2150V2580H1720V3010H1290V3440H860V3870H430V3010H860V2150H0V1720H430V1290H860V860H1290V430H1720V0H2150V860Z"
+  ></path>
+</svg>

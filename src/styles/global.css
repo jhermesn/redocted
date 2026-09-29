@@ -1,0 +1,171 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-mono: var(--font-plex-mono), ui-monospace, 'SF Mono', Menlo, monospace;
+
+  --color-ink-900: #06090d;
+  --color-ink-850: #0b1017;
+  --color-ink-800: #161d26;
+  --color-ink-700: #1f2833;
+  --color-ink-500: #3a4757;
+  --color-ink-400: #5c6a7d;
+  --color-ink-300: #97a4b3;
+  --color-ink-100: #e6ebf2;
+
+  --color-brand-purple: #ad5cff;
+  --color-brand-mint: #00e582;
+  --color-brand-magenta: #ff57e9;
+  --color-brand-amber: #ff9900;
+
+  --spacing-cell: 3.25rem;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-ink-900);
+    color: var(--color-ink-100);
+    font-family: var(--font-mono);
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-brand-mint);
+    outline-offset: 3px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@utility grid-lines {
+  background-image:
+    linear-gradient(to right, color-mix(in srgb, var(--color-ink-100) 7%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in srgb, var(--color-ink-100) 7%, transparent) 1px, transparent 1px);
+  background-size: var(--spacing-cell) var(--spacing-cell);
+}
+
+
+
+@layer components {
+  .tab {
+    padding: 0.25rem 0.75rem;
+    border: 1px solid var(--color-ink-700);
+    color: var(--color-ink-300);
+  }
+  .tab[aria-current='page'] {
+    border-color: var(--color-brand-amber);
+    color: var(--color-ink-100);
+  }
+
+  .article {
+    line-height: 1.8;
+    overflow-wrap: anywhere;
+  }
+  .article h1 { font-size: 1.875rem; font-weight: 700; margin-bottom: 1rem; }
+  .article h2 { font-size: 1.25rem; font-weight: 700; margin: 1.5rem 0 0.5rem; color: var(--color-brand-purple); }
+  .article h3 { font-weight: 700; margin: 1rem 0 0.25rem; }
+  .article p { margin: 0.75rem 0; }
+  .article ul { list-style: square; padding-left: 1.5rem; }
+
+  .redacted {
+    position: relative;
+    background: var(--color-ink-400);
+    color: transparent;
+    border-radius: 2px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .redacted.peek::after,
+  .show-letter-counts .redacted::after {
+    content: attr(data-len);
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-ink-100);
+    font-size: 0.7em;
+    line-height: 1;
+  }
+  .hit {
+    background: color-mix(in srgb, var(--color-brand-mint) 22%, transparent);
+    outline: 1px solid var(--color-brand-mint);
+  }
+  .hit.current { outline: 2px solid var(--color-brand-magenta); }
+
+  .guess-form { display: flex; gap: 0.5rem; }
+  .guess-form input {
+    flex: 1;
+    min-width: 0;
+    background: var(--color-ink-850);
+    border: 1px solid var(--color-ink-500);
+    padding: 0.5rem 0.75rem;
+    color: var(--color-ink-100);
+  }
+  .btn-primary {
+    background: var(--color-brand-purple);
+    color: var(--color-ink-900);
+    font-weight: 700;
+    padding: 0.5rem 1rem;
+  }
+  .btn-ghost {
+    border: 1px solid var(--color-ink-500);
+    color: var(--color-ink-300);
+    padding: 0.25rem 0.75rem;
+  }
+  .btn-ghost:disabled { opacity: 0.4; }
+
+  .guess-table { width: 100%; font-size: 0.875rem; margin-top: 1rem; }
+  .guess-table th { text-align: left; color: var(--color-ink-300); font-weight: 400; }
+  .guess-word { text-decoration: underline dotted; text-underline-offset: 3px; }
+  .guess-word:hover { color: var(--color-brand-mint); }
+
+  .btn-primary,
+  .btn-ghost { white-space: nowrap; line-height: 1.5rem; }
+
+  /* Tailwind's preflight resets dialog margins; auto restores native centering. */
+  .result {
+    margin: auto;
+    background: var(--color-ink-800);
+    color: var(--color-ink-100);
+    border: 1px solid var(--color-brand-purple);
+    padding: 1.5rem;
+    width: min(34rem, calc(100vw - 2rem));
+  }
+  .close-button {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    display: grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    color: var(--color-ink-300);
+  }
+  .close-button:hover { color: var(--color-ink-100); }
+  .close-button svg { width: 1.25rem; height: 1.25rem; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; }
+  .result h2 { padding-right: 2rem; }
+  .result::backdrop { background: rgb(6 9 13 / 0.8); }
+
+  @media (max-width: 1023px) {
+    .guess-form {
+      position: fixed;
+      inset: auto 0 0 0;
+      z-index: 20;
+      padding: 0.75rem 1rem;
+      background: var(--color-ink-900);
+      border-top: 1px solid var(--color-ink-700);
+    }
+  }
+}

@@ -1,0 +1,114 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import { getMessages, HTML_LANG, LOCALES, parseLocale } from '../i18n/index.ts';
+import { CORPORA, CORPUS_LABEL } from '../lib/corpora.ts';
+import { MAX_GUESS_LENGTH } from '../lib/game.ts';
+import pkg from '../../package.json';
+import BoltMark from './BoltMark.astro';
+
+const locale = parseLocale(Astro.currentLocale);
+const t = getMessages(locale);
+---
+
+<div class="grid-lines min-h-dvh">
+  <header class="sticky top-0 z-10 border-b border-ink-700 bg-ink-900/90 backdrop-blur">
+    <div class="mx-auto flex max-w-6xl flex-wrap items-center gap-3 px-4 py-3">
+      <BoltMark class="h-6 w-4 text-brand-mint" />
+      <span class="font-bold tracking-tight">Redocted</span>
+      <nav class="ml-2 flex gap-1 text-sm" aria-label={t.corpusNavLabel}>
+        {CORPORA.map((corpus) => <a id={`tab-${corpus}`} class="tab" href={`?c=${corpus}`}>{CORPUS_LABEL[corpus]}</a>)}
+      </nav>
+      <span id="meta" class="ml-auto text-xs text-ink-300 sm:text-sm"></span>
+      <nav class="flex gap-1 text-xs" aria-label={t.languageNavLabel}>
+        {
+          LOCALES.map((option) => (
+            <a
+              class="tab"
+              data-locale-link
+              href={getRelativeLocaleUrl(option)}
+              hreflang={HTML_LANG[option]}
+              lang={HTML_LANG[option]}
+              aria-current={option === locale ? 'page' : undefined}
+            >
+              {getMessages(option).languageName}
+            </a>
+          ))
+        }
+      </nav>
+    </div>
+  </header>
+
+  <main class="mx-auto grid max-w-6xl gap-6 px-4 py-6 pb-28 lg:grid-cols-[1fr_18rem] lg:pb-6">
+    <div class="min-w-0">
+      <article id="article" class="article" lang="en">{t.loading}</article>
+      <noscript><p class="text-sm text-ink-300">{t.noscript}</p></noscript>
+      <p id="attribution" class="mt-6 text-xs text-ink-300"></p>
+    </div>
+
+    <aside class="lg:sticky lg:top-20 lg:self-start">
+      <form id="guess-form" class="guess-form" autocomplete="off">
+        <label for="guess-input" class="sr-only">{t.guessLabel}</label>
+        <input
+          id="guess-input"
+          name="guess"
+          maxlength={MAX_GUESS_LENGTH}
+          placeholder={t.guessPlaceholder}
+          autocapitalize="off"
+          spellcheck="false"
+          enterkeyhint="send"
+        />
+        <button id="guess-submit" class="btn-primary" type="submit">{t.guessSubmit}</button>
+      </form>
+      <p id="feedback" class="mt-2 min-h-5 text-sm text-ink-300" aria-live="polite"></p>
+
+      <table class="guess-table">
+        <thead>
+          <tr><th>{t.columnNumber}</th><th>{t.columnWord}</th><th>{t.columnHits}</th></tr>
+        </thead>
+        <tbody id="guess-list"></tbody>
+      </table>
+
+      <div class="mt-4 flex gap-2 text-sm">
+        <a id="prev" class="btn-ghost">{t.previous}</a>
+        <button id="give-up" class="btn-ghost" type="button">{t.giveUp}</button>
+        <button id="show-result" class="btn-ghost" type="button" hidden>{t.showResult}</button>
+      </div>
+
+      <label class="mt-4 flex items-center gap-2 text-sm text-ink-300">
+        <input id="show-counts" type="checkbox" />
+        {t.showLetterCounts}
+      </label>
+
+      <details class="mt-4 text-sm text-ink-300">
+        <summary class="cursor-pointer">{t.howToPlayTitle}</summary>
+        <p class="mt-2">{t.howToPlayBody}</p>
+      </details>
+    </aside>
+  </main>
+
+  <dialog id="result" class="result" aria-labelledby="result-title">
+    <form method="dialog">
+      <button class="close-button" aria-label={t.close}>
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18" /></svg>
+      </button>
+    </form>
+    <h2 id="result-title" class="text-xl font-bold text-brand-mint"></h2>
+    <p id="result-summary" class="mt-2"></p>
+    <p id="result-stats" class="mt-2 text-sm text-ink-300"></p>
+    <p class="mt-3">
+      <a id="result-source" class="text-brand-purple underline" target="_blank" rel="noopener noreferrer">{t.readSource}</a>
+    </p>
+    <p id="result-attribution" class="mt-2 text-xs text-ink-300"></p>
+    <div class="mt-4 flex flex-wrap gap-2">
+      <button id="share" class="btn-primary" type="button">{t.share}</button>
+    </div>
+  </dialog>
+
+  <footer class="mx-auto max-w-6xl px-4 pb-32 text-xs text-ink-300 lg:pb-8">
+    {t.footerBy} <a class="text-ink-100 underline" href={pkg.author.url} rel="author">{pkg.author.name}</a>. {t.footerNote}
+  </footer>
+</div>
+
+<script>
+  import '../scripts/app.ts';
+</script>

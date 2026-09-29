@@ -1,0 +1,27 @@
+name: Article came out wrong
+description: A puzzle shows banner text, code, a strange title, or missing prose.
+labels: [corpus]
+body:
+  - type: dropdown
+    id: board
+    attributes:
+      label: Board
+      options: [AWS, Kubernetes]
+    validations:
+      required: true
+
+  - type: input
+    id: puzzle
+    attributes:
+      label: Puzzle number
+      placeholder: "12"
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What looks wrong
+      description: Quote the text that should not be there, or describe what is missing compared with the source page.
+    validations:
+      required: true

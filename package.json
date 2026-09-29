@@ -1,0 +1,53 @@
+{
+  "name": "redocted",
+  "version": "0.0.0",
+  "description": "Daily redacted-documentation guessing game for AWS and Kubernetes docs",
+  "license": "MIT",
+  "author": {
+    "name": "Jorge Hermes",
+    "url": "https://jhermesn.dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jhermesn/redocted.git"
+  },
+  "homepage": "https://jhermesn.dev/redocted/",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "test": "vitest run",
+    "typecheck": "astro sync && tsc --noEmit",
+    "corpus": "node scripts/build-corpus.ts",
+    "check:seasons": "node scripts/check-seasons.ts"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.4",
+    "@tailwindcss/vite": "^4.3.3",
+    "astro": "^7.3.5",
+    "escape-html": "^1.0.3",
+    "stopword": "^3.1.5",
+    "tailwindcss": "^4.3.3",
+    "valibot": "^1.5.0"
+  },
+  "devDependencies": {
+    "@types/escape-html": "^1.0.4",
+    "@types/node": "^24.19.0",
+    "@types/pluralize": "^0.0.33",
+    "@types/stopword": "^2.0.3",
+    "fast-shuffle": "^6.2.1",
+    "linkedom": "^0.18.13",
+    "p-limit": "^7.3.3",
+    "p-retry": "^8.0.1",
+    "pluralize": "^8.0.0",
+    "typescript": "^7.0.2",
+    "vitest": "^5.0.2",
+    "wink-lemmatizer": "^3.0.4",
+    "wink-lexicon": "^2.2.0"
+  }
+}

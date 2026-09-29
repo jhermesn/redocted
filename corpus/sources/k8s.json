@@ -1,0 +1,637 @@
+{
+  "corpus": "k8s",
+  "license": "Kubernetes Documentation © The Kubernetes Authors, licensed CC BY 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+  "seasons": [
+    {
+      "startPuzzle": 1,
+      "salt": "k8s-season-1",
+      "pages": [
+        {
+          "id": "cluster-administration-swap-memory-management",
+          "docsUrl": "https://kubernetes.io/docs/concepts/cluster-administration/swap-memory-management/"
+        },
+        {
+          "id": "workloads-workload-api-disruption-and-priority",
+          "docsUrl": "https://kubernetes.io/docs/concepts/workloads/workload-api/disruption-and-priority/"
+        },
+        {
+          "id": "cluster-administration-node-autoscaling",
+          "docsUrl": "https://kubernetes.io/docs/concepts/cluster-administration/node-autoscaling/"
+        },
+        {
+          "id": "workloads-autoscaling-vertical-pod-autoscale",
+          "docsUrl": "https://kubernetes.io/docs/concepts/workloads/autoscaling/vertical-pod-autoscale/"
+        },
+        {
+          "id": "storage-windows-storage",
+          "docsUrl": "https://kubernetes.io/docs/concepts/storage/windows-storage/"
+        },
+        {
+          "id": "overview-working-with-objects-annotations",
+          "docsUrl": "https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/"
+        },
+        {
+          "id": "security-cloud-native-security",
+          "docsUrl": "https://kubernetes.io/docs/concepts/security/cloud-native-security/"
+        },
+        {
+          "id": "containers-images",
+          "docsUrl": "https://kubernetes.io/docs/concepts/containers/images/"
+        },
+        {
+          "id": "resource-management-resource-managers",
+          "docsUrl": "https://kubernetes.io/docs/concepts/resource-management/resource-managers/"
+        },
+        {
+          "id": "workloads-pods-sidecar-containers",
+          "docsUrl": "https://kubernetes.io/docs/concepts/workloads/pods/sidecar-containers/"
+        },
+        {
+          "id": "services-networking",
+          "docsUrl": "https://kubernetes.io/docs/concepts/services-networking/"
+        },
+        {
+          "id": "workloads-podgroup-api",
+          "docsUrl": "https://kubernetes.io/docs/concepts/workloads/podgroup-api/"
+        },
+        {
+          "id": "architecture-cloud-controller",
+          "docsUrl": "https://kubernetes.io/docs/concepts/architecture/cloud-controller/"
+        },
+        {
+          "id": "resource-management-dynamic-resource-allocation-dra-features",
+          "docsUrl": "https://kubernetes.io/docs/concepts/resource-management/dynamic-resource-allocation/dra-features/"
+        },
+        {
+          "id": "services-networking-topology-aware-routing",
+          "docsUrl": "https://kubernetes.io/docs/concepts/services-networking/topology-aware-routing/"
+        },
+        {
+          "id": "scheduling-eviction-scheduler-perf-tuning",
+          "docsUrl": "https://kubernetes.io/docs/concepts/scheduling-eviction/scheduler-perf-tuning/"
+        },
+        {
+          "id": "overview-working-with-objects-common-labels",
+          "docsUrl": "https://kubernetes.io/docs/concepts/overview/working-with-objects/common-labels/"
+        },
+        {
+          "id": "storage-dynamic-provisioning",
+          "docsUrl": "https://kubernetes.io/docs/concepts/storage/dynamic-provisioning/"
+        },
+        {
+          "id": "scheduling-eviction-topology-spread-constraints",
+          "docsUrl": "https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/"
+        },
+        {
+          "id": "services-networking-gateway",
+          "docsUrl": "https://kubernetes.io/docs/concepts/services-networking/gateway/"
+        },
+        {
+          "id": "scheduling-eviction-scheduling-framework",
+          "docsUrl": "https://kubernetes.io/docs/concepts/scheduling-eviction/scheduling-framework/"
+        },
+        {
+          "id": "architecture-leases",
+          "docsUrl": "https://kubernetes.io/docs/concepts/architecture/leases/"
+        },
+        {
+          "id": "workloads-pods-ephemeral-containers",
+          "docsUrl": "https://kubernetes.io/docs/concepts/workloads/pods/ephemeral-containers/"
+        },
+        {
+          "id": "cluster-administration-proxies",
+          "docsUrl": "https://kubernetes.io/docs/concepts/cluster-administration/proxies/"
+        },
+        {
+          "id": "resource-management-dynamic-resource-allocation-device-taints",
+          "docsUrl": "https://kubernetes.io/docs/concepts/resource-management/dynamic-resource-allocation/device-taints/"
+        },
+        {
+          "id": "workloads-workload-api",
+          "docsUrl": "https://kubernetes.io/docs/concepts/workloads/workload-api/"
+        },
+        {
+          "id": "cluster-administration-kube-state-metrics",
+          "docsUrl": "https://kubernetes.io/docs/concepts/cluster-administration/kube-state-metrics/"
+        },
+        {
+          "id": "workloads-controllers-cron-jobs",
+          "docsUrl": "https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/"
+        },
+        {
+          "id": "services-networking-dns-pod-service",
+          "docsUrl": "https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/"
+        },
+        {
+          "id": "overview-kubernetes-api",
+          "docsUrl": "https://kubernetes.io/docs/concepts/overview/kubernetes-api/"
+        },
+        {
+          "id": "workloads-pods-init-containers",
+          "docsUrl": "https://kubernetes.io/docs/concepts/workloads/pods/init-containers/"
+        },
+        {
+          "id": "scheduling-eviction-podgroup-scheduling",
+          "docsUrl": "https://kubernetes.io/docs/concepts/scheduling-eviction/podgroup-scheduling/"
+        },
+        {
+          "id": "extend-kubernetes-operator",
+          "docsUrl": "https://kubernetes.io/docs/concepts/extend-kubernetes/operator/"
+        },
+        {
+          "id": "storage-storage-capacity",
+          "docsUrl": "https://kubernetes.io/docs/concepts/storage/storage-capacity/"
+        },
+        {
+          "id": "services-networking-windows-networking",
+          "docsUrl": "https://kubernetes.io/docs/concepts/services-networking/windows-networking/"
+        },
+        {
+          "id": "cluster-administration-coordinated-leader-election",
+          "docsUrl": "https://kubernetes.io/docs/concepts/cluster-administration/coordinated-leader-election/"
+        },
+        {
+          "id": "workloads-workload-api-policies",
+          "docsUrl": "https://kubernetes.io/docs/concepts/workloads/workload-api/policies/"
+        },
+        {
+          "id": "cluster-administration-networking",
+          "docsUrl": "https://kubernetes.io/docs/concepts/cluster-administration/networking/"
+        },
+        {
+          "id": "resource-management-pod-level-resource-managers",
+          "docsUrl": "https://kubernetes.io/docs/concepts/resource-management/pod-level-resource-managers/"
+        },
+        {
+          "id": "workloads-pods-advanced-pod-config",
+          "docsUrl": "https://kubernetes.io/docs/concepts/workloads/pods/advanced-pod-config/"
+        },
+        {
+          "id": "scheduling-eviction-node-declared-features",
+          "docsUrl": "https://kubernetes.io/docs/concepts/scheduling-eviction/node-declared-features/"
+        },
+        {
+          "id": "storage-persistent-volumes",
+          "docsUrl": "https://kubernetes.io/docs/concepts/storage/persistent-volumes/"
+        },
+        {
+          "id": "overview-working-with-objects-labels",
+          "docsUrl": "https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/"
+        },
+        {
+          "id": "policy-resource-quotas",
+          "docsUrl": "https://kubernetes.io/docs/concepts/policy/resource-quotas/"
+        },
+        {
+          "id": "scheduling-eviction-resource-bin-packing",
+          "docsUrl": "https://kubernetes.io/docs/concepts/scheduling-eviction/resource-bin-packing/"
+        },
+        {
+          "id": "cluster-administration",
+          "docsUrl": "https://kubernetes.io/docs/concepts/cluster-administration/"
+        },
+        {
+          "id": "storage-storage-classes",
+          "docsUrl": "https://kubernetes.io/docs/concepts/storage/storage-classes/"
+        },
+        {
+          "id": "workloads-podgroup-api-lifecycle",
+          "docsUrl": "https://kubernetes.io/docs/concepts/workloads/podgroup-api/lifecycle/"
+        },
+        {
+          "id": "services-networking-network-policies",
+          "docsUrl": "https://kubernetes.io/docs/concepts/services-networking/network-policies/"
+        },
+        {
+          "id": "workloads-compositepodgroup-api",
+          "docsUrl": "https://kubernetes.io/docs/concepts/workloads/compositepodgroup-api/"
+        },
+        {
+          "id": "workloads-management",
+          "docsUrl": "https://kubernetes.io/docs/concepts/workloads/management/"
+        },
+        {
+          "id": "overview-components",
+          "docsUrl": "https://kubernetes.io/docs/concepts/overview/components/"
+        },
+        {
+          "id": "workloads",
+          "docsUrl": "https://kubernetes.io/docs/concepts/workloads/"
+        },
+        {
+          "id": "configuration-windows-resource-management",
+          "docsUrl": "https://kubernetes.io/docs/concepts/configuration/windows-resource-management/"
+        },
+        {
+          "id": "cluster-administration-admission-webhooks-good-practices",
+          "docsUrl": "https://kubernetes.io/docs/concepts/cluster-administration/admission-webhooks-good-practices/"
+        },
+        {
+          "id": "workloads-pods-downward-api",
+          "docsUrl": "https://kubernetes.io/docs/concepts/workloads/pods/downward-api/"
+        },
+        {
+          "id": "architecture-nodes",
+          "docsUrl": "https://kubernetes.io/docs/concepts/architecture/nodes/"
+        },
+        {
+          "id": "scheduling-eviction-topology-aware-scheduling",
+          "docsUrl": "https://kubernetes.io/docs/concepts/scheduling-eviction/topology-aware-scheduling/"
+        },
+        {
+          "id": "configuration-configmap",
+          "docsUrl": "https://kubernetes.io/docs/concepts/configuration/configmap/"
+        },
+        {
+          "id": "extend-kubernetes-api-extension-apiserver-aggregation",
+          "docsUrl": "https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/apiserver-aggregation/"
+        },
+        {
+          "id": "security-pod-security-admission",
+          "docsUrl": "https://kubernetes.io/docs/concepts/security/pod-security-admission/"
+        },
+        {
+          "id": "containers-container-lifecycle-hooks",
+          "docsUrl": "https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/"
+        },
+        {
+          "id": "security-secrets-good-practices",
+          "docsUrl": "https://kubernetes.io/docs/concepts/security/secrets-good-practices/"
+        },
+        {
+          "id": "workloads-pods",
+          "docsUrl": "https://kubernetes.io/docs/concepts/workloads/pods/"
+        },
+        {
+          "id": "workloads-pods-static-pods",
+          "docsUrl": "https://kubernetes.io/docs/concepts/workloads/pods/static-pods/"
+        },
+        {
+          "id": "security-windows-security",
+          "docsUrl": "https://kubernetes.io/docs/concepts/security/windows-security/"
+        },
+        {
+          "id": "scheduling-eviction-pod-overhead",
+          "docsUrl": "https://kubernetes.io/docs/concepts/scheduling-eviction/pod-overhead/"
+        },
+        {
+          "id": "overview-working-with-objects-owners-dependents",
+          "docsUrl": "https://kubernetes.io/docs/concepts/overview/working-with-objects/owners-dependents/"
+        },
+        {
+          "id": "cluster-administration-observability",
+          "docsUrl": "https://kubernetes.io/docs/concepts/cluster-administration/observability/"
+        },
+        {
+          "id": "architecture-self-healing",
+          "docsUrl": "https://kubernetes.io/docs/concepts/architecture/self-healing/"
+        },
+        {
+          "id": "storage-projected-volumes",
+          "docsUrl": "https://kubernetes.io/docs/concepts/storage/projected-volumes/"
+        },
+        {
+          "id": "scheduling-eviction-kube-scheduler",
+          "docsUrl": "https://kubernetes.io/docs/concepts/scheduling-eviction/kube-scheduler/"
+        },
+        {
+          "id": "security-linux-kernel-security-constraints",
+          "docsUrl": "https://kubernetes.io/docs/concepts/security/linux-kernel-security-constraints/"
+        },
+        {
+          "id": "services-networking-service-traffic-policy",
+          "docsUrl": "https://kubernetes.io/docs/concepts/services-networking/service-traffic-policy/"
+        },
+        {
+          "id": "overview-kubectl",
+          "docsUrl": "https://kubernetes.io/docs/concepts/overview/kubectl/"
+        },
+        {
+          "id": "workloads-autoscaling-horizontal-pod-autoscale",
+          "docsUrl": "https://kubernetes.io/docs/concepts/workloads/autoscaling/horizontal-pod-autoscale/"
+        },
+        {
+          "id": "resource-management-dynamic-resource-allocation",
+          "docsUrl": "https://kubernetes.io/docs/concepts/resource-management/dynamic-resource-allocation/"
+        },
+        {
+          "id": "workloads-pods-disruptions",
+          "docsUrl": "https://kubernetes.io/docs/concepts/workloads/pods/disruptions/"
+        },
+        {
+          "id": "windows-intro",
+          "docsUrl": "https://kubernetes.io/docs/concepts/windows/intro/"
+        },
+        {
+          "id": "storage-volume-snapshot-classes",
+          "docsUrl": "https://kubernetes.io/docs/concepts/storage/volume-snapshot-classes/"
+        },
+        {
+          "id": "scheduling-eviction-assign-pod-node",
+          "docsUrl": "https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/"
+        },
+        {
+          "id": "scheduling-eviction-gang-scheduling",
+          "docsUrl": "https://kubernetes.io/docs/concepts/scheduling-eviction/gang-scheduling/"
+        },
+        {
+          "id": "workloads-pods-pod-lifecycle",
+          "docsUrl": "https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/"
+        },
+        {
+          "id": "storage-volume-populators-and-data-sources",
+          "docsUrl": "https://kubernetes.io/docs/concepts/storage/volume-populators-and-data-sources/"
+        },
+        {
+          "id": "security-multi-tenancy",
+          "docsUrl": "https://kubernetes.io/docs/concepts/security/multi-tenancy/"
+        },
+        {
+          "id": "configuration-organize-cluster-access-kubeconfig",
+          "docsUrl": "https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig/"
+        },
+        {
+          "id": "services-networking-ingress-controllers",
+          "docsUrl": "https://kubernetes.io/docs/concepts/services-networking/ingress-controllers/"
+        },
+        {
+          "id": "overview-working-with-objects-object-management",
+          "docsUrl": "https://kubernetes.io/docs/concepts/overview/working-with-objects/object-management/"
+        },
+        {
+          "id": "workloads-workload-api-workloadbuilder",
+          "docsUrl": "https://kubernetes.io/docs/concepts/workloads/workload-api/workloadbuilder/"
+        },
+        {
+          "id": "resource-management-dynamic-resource-allocation-how-dra-works",
+          "docsUrl": "https://kubernetes.io/docs/concepts/resource-management/dynamic-resource-allocation/how-dra-works/"
+        },
+        {
+          "id": "overview-working-with-objects-field-selectors",
+          "docsUrl": "https://kubernetes.io/docs/concepts/overview/working-with-objects/field-selectors/"
+        },
+        {
+          "id": "extend-kubernetes",
+          "docsUrl": "https://kubernetes.io/docs/concepts/extend-kubernetes/"
+        },
+        {
+          "id": "storage-volume-pvc-datasource",
+          "docsUrl": "https://kubernetes.io/docs/concepts/storage/volume-pvc-datasource/"
+        },
+        {
+          "id": "services-networking-dual-stack",
+          "docsUrl": "https://kubernetes.io/docs/concepts/services-networking/dual-stack/"
+        },
+        {
+          "id": "workloads-controllers-daemonset",
+          "docsUrl": "https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/"
+        },
+        {
+          "id": "overview-working-with-objects",
+          "docsUrl": "https://kubernetes.io/docs/concepts/overview/working-with-objects/"
+        },
+        {
+          "id": "workloads-controllers-replicaset",
+          "docsUrl": "https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/"
+        },
+        {
+          "id": "cluster-administration-system-metrics",
+          "docsUrl": "https://kubernetes.io/docs/concepts/cluster-administration/system-metrics/"
+        },
+        {
+          "id": "workloads-controllers",
+          "docsUrl": "https://kubernetes.io/docs/concepts/workloads/controllers/"
+        },
+        {
+          "id": "resource-management-dynamic-resource-allocation-dra-observability",
+          "docsUrl": "https://kubernetes.io/docs/concepts/resource-management/dynamic-resource-allocation/dra-observability/"
+        },
+        {
+          "id": "services-networking-cluster-ip-allocation",
+          "docsUrl": "https://kubernetes.io/docs/concepts/services-networking/cluster-ip-allocation/"
+        },
+        {
+          "id": "architecture-controller",
+          "docsUrl": "https://kubernetes.io/docs/concepts/architecture/controller/"
+        },
+        {
+          "id": "security-application-security-checklist",
+          "docsUrl": "https://kubernetes.io/docs/concepts/security/application-security-checklist/"
+        },
+        {
+          "id": "services-networking-service",
+          "docsUrl": "https://kubernetes.io/docs/concepts/services-networking/service/"
+        },
+        {
+          "id": "workloads-pods-scheduling-group",
+          "docsUrl": "https://kubernetes.io/docs/concepts/workloads/pods/scheduling-group/"
+        },
+        {
+          "id": "overview",
+          "docsUrl": "https://kubernetes.io/docs/concepts/overview/"
+        },
+        {
+          "id": "security-service-accounts",
+          "docsUrl": "https://kubernetes.io/docs/concepts/security/service-accounts/"
+        },
+        {
+          "id": "cluster-administration-dra",
+          "docsUrl": "https://kubernetes.io/docs/concepts/cluster-administration/dra/"
+        },
+        {
+          "id": "cluster-administration-system-logs",
+          "docsUrl": "https://kubernetes.io/docs/concepts/cluster-administration/system-logs/"
+        },
+        {
+          "id": "services-networking-endpoint-slices",
+          "docsUrl": "https://kubernetes.io/docs/concepts/services-networking/endpoint-slices/"
+        },
+        {
+          "id": "workloads-pods-probes",
+          "docsUrl": "https://kubernetes.io/docs/concepts/workloads/pods/probes/"
+        },
+        {
+          "id": "cluster-administration-flow-control",
+          "docsUrl": "https://kubernetes.io/docs/concepts/cluster-administration/flow-control/"
+        },
+        {
+          "id": "security",
+          "docsUrl": "https://kubernetes.io/docs/concepts/security/"
+        },
+        {
+          "id": "workloads-pods-pod-hostname",
+          "docsUrl": "https://kubernetes.io/docs/concepts/workloads/pods/pod-hostname/"
+        },
+        {
+          "id": "architecture-mixed-version-proxy",
+          "docsUrl": "https://kubernetes.io/docs/concepts/architecture/mixed-version-proxy/"
+        },
+        {
+          "id": "configuration",
+          "docsUrl": "https://kubernetes.io/docs/concepts/configuration/"
+        },
+        {
+          "id": "storage-volumes",
+          "docsUrl": "https://kubernetes.io/docs/concepts/storage/volumes/"
+        },
+        {
+          "id": "overview-working-with-objects-finalizers",
+          "docsUrl": "https://kubernetes.io/docs/concepts/overview/working-with-objects/finalizers/"
+        },
+        {
+          "id": "architecture-cgroups",
+          "docsUrl": "https://kubernetes.io/docs/concepts/architecture/cgroups/"
+        },
+        {
+          "id": "workloads-controllers-statefulset",
+          "docsUrl": "https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/"
+        },
+        {
+          "id": "architecture-garbage-collection",
+          "docsUrl": "https://kubernetes.io/docs/concepts/architecture/garbage-collection/"
+        },
+        {
+          "id": "containers-cri",
+          "docsUrl": "https://kubernetes.io/docs/concepts/containers/cri/"
+        },
+        {
+          "id": "configuration-secret",
+          "docsUrl": "https://kubernetes.io/docs/concepts/configuration/secret/"
+        },
+        {
+          "id": "policy-pid-limiting",
+          "docsUrl": "https://kubernetes.io/docs/concepts/policy/pid-limiting/"
+        },
+        {
+          "id": "scheduling-eviction-taint-and-toleration",
+          "docsUrl": "https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/"
+        },
+        {
+          "id": "policy",
+          "docsUrl": "https://kubernetes.io/docs/concepts/policy/"
+        },
+        {
+          "id": "scheduling-eviction-workload-aware-preemption",
+          "docsUrl": "https://kubernetes.io/docs/concepts/scheduling-eviction/workload-aware-preemption/"
+        },
+        {
+          "id": "scheduling-eviction-node-pressure-eviction",
+          "docsUrl": "https://kubernetes.io/docs/concepts/scheduling-eviction/node-pressure-eviction/"
+        },
+        {
+          "id": "storage-volume-health-monitoring",
+          "docsUrl": "https://kubernetes.io/docs/concepts/storage/volume-health-monitoring/"
+        },
+        {
+          "id": "overview-working-with-objects-storage-version",
+          "docsUrl": "https://kubernetes.io/docs/concepts/overview/working-with-objects/storage-version/"
+        },
+        {
+          "id": "workloads-pods-user-namespaces",
+          "docsUrl": "https://kubernetes.io/docs/concepts/workloads/pods/user-namespaces/"
+        },
+        {
+          "id": "workloads-pods-pod-qos",
+          "docsUrl": "https://kubernetes.io/docs/concepts/workloads/pods/pod-qos/"
+        },
+        {
+          "id": "cluster-administration-node-shutdown",
+          "docsUrl": "https://kubernetes.io/docs/concepts/cluster-administration/node-shutdown/"
+        },
+        {
+          "id": "architecture",
+          "docsUrl": "https://kubernetes.io/docs/concepts/architecture/"
+        },
+        {
+          "id": "architecture-control-plane-node-communication",
+          "docsUrl": "https://kubernetes.io/docs/concepts/architecture/control-plane-node-communication/"
+        },
+        {
+          "id": "storage-ephemeral-storage",
+          "docsUrl": "https://kubernetes.io/docs/concepts/storage/ephemeral-storage/"
+        },
+        {
+          "id": "cluster-administration-logging",
+          "docsUrl": "https://kubernetes.io/docs/concepts/cluster-administration/logging/"
+        },
+        {
+          "id": "security-controlling-access",
+          "docsUrl": "https://kubernetes.io/docs/concepts/security/controlling-access/"
+        },
+        {
+          "id": "extend-kubernetes-compute-storage-net-network-plugins",
+          "docsUrl": "https://kubernetes.io/docs/concepts/extend-kubernetes/compute-storage-net/network-plugins/"
+        },
+        {
+          "id": "services-networking-ingress",
+          "docsUrl": "https://kubernetes.io/docs/concepts/services-networking/ingress/"
+        },
+        {
+          "id": "workloads-pods-pod-condition",
+          "docsUrl": "https://kubernetes.io/docs/concepts/workloads/pods/pod-condition/"
+        },
+        {
+          "id": "storage-volume-snapshots",
+          "docsUrl": "https://kubernetes.io/docs/concepts/storage/volume-snapshots/"
+        },
+        {
+          "id": "extend-kubernetes-compute-storage-net-device-plugins",
+          "docsUrl": "https://kubernetes.io/docs/concepts/extend-kubernetes/compute-storage-net/device-plugins/"
+        },
+        {
+          "id": "storage-ephemeral-volumes",
+          "docsUrl": "https://kubernetes.io/docs/concepts/storage/ephemeral-volumes/"
+        },
+        {
+          "id": "scheduling-eviction-api-eviction",
+          "docsUrl": "https://kubernetes.io/docs/concepts/scheduling-eviction/api-eviction/"
+        },
+        {
+          "id": "overview-working-with-objects-namespaces",
+          "docsUrl": "https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/"
+        },
+        {
+          "id": "workloads-controllers-replicationcontroller",
+          "docsUrl": "https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller/"
+        },
+        {
+          "id": "workloads-controllers-deployment",
+          "docsUrl": "https://kubernetes.io/docs/concepts/workloads/controllers/deployment/"
+        },
+        {
+          "id": "scheduling-eviction-pod-priority-preemption",
+          "docsUrl": "https://kubernetes.io/docs/concepts/scheduling-eviction/pod-priority-preemption/"
+        },
+        {
+          "id": "workloads-autoscaling",
+          "docsUrl": "https://kubernetes.io/docs/concepts/workloads/autoscaling/"
+        },
+        {
+          "id": "security-pod-security-standards",
+          "docsUrl": "https://kubernetes.io/docs/concepts/security/pod-security-standards/"
+        },
+        {
+          "id": "security-security-checklist",
+          "docsUrl": "https://kubernetes.io/docs/concepts/security/security-checklist/"
+        },
+        {
+          "id": "workloads-controllers-job",
+          "docsUrl": "https://kubernetes.io/docs/concepts/workloads/controllers/job/"
+        },
+        {
+          "id": "containers",
+          "docsUrl": "https://kubernetes.io/docs/concepts/containers/"
+        },
+        {
+          "id": "cluster-administration-system-traces",
+          "docsUrl": "https://kubernetes.io/docs/concepts/cluster-administration/system-traces/"
+        },
+        {
+          "id": "extend-kubernetes-api-extension-custom-resources",
+          "docsUrl": "https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/"
+        }
+      ]
+    }
+  ]
+}
