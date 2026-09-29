@@ -1,6 +1,6 @@
 {
   "name": "redocted",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "Daily redacted-documentation guessing game for AWS and Kubernetes docs",
   "license": "MIT",
   "author": {
