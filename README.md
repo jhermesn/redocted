@@ -12,6 +12,10 @@ does the same with Wikipedia.
 
 **Play:** https://jhermesn.dev/redocted/ · [Português](https://jhermesn.dev/redocted/pt-br/)
 
+![A puzzle in progress: most words are black bars showing their letter counts, and the guess list shows each guess with its number of matches](.github/assets/screenshot-game.png)
+
+![The result after a game: the article title, guesses and accuracy, stats, a link to the official page and a button to copy the result](.github/assets/screenshot-result.png)
+
 ## How to play
 
 - Every word you guess is revealed everywhere it appears in the article.
