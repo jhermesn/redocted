@@ -105,7 +105,12 @@ const t = getMessages(locale);
     <p id="result-attribution" class="mt-2 text-xs text-ink-300"></p>
     <div class="mt-4 flex flex-wrap gap-2">
       <button id="share" class="btn-primary" type="button">{t.share}</button>
+      <button id="share-native" class="btn-ghost" type="button" hidden>{t.shareNative}</button>
     </div>
+    <nav class="mt-4 text-sm" aria-labelledby="share-on-label">
+      <p id="share-on-label" class="text-ink-300">{t.shareOnLabel}</p>
+      <ul id="share-links" class="mt-2 flex flex-wrap gap-2"></ul>
+    </nav>
   </dialog>
 
   <footer class="mx-auto max-w-6xl px-4 pb-32 text-xs text-ink-300 lg:pb-8">

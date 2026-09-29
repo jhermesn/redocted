@@ -33,6 +33,9 @@ does the same with Wikipedia.
   read it, with a link to the official page.
 - Fewer guesses is better. The game also tracks accuracy (the share of guesses
   that revealed at least one word) and the hints you used.
+- Share the result, without spoilers, by copying it or posting it to X,
+  Bluesky, LinkedIn, WhatsApp or Telegram. Winning and giving up post
+  different messages.
 - A new puzzle comes out every day at 00:00 UTC, the same for everyone. Two
   boards: **AWS** and **Kubernetes**. Earlier puzzles stay playable.
 

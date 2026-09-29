@@ -37,6 +37,8 @@ export const en = {
   resultStats: (played: number, won: number, streak: number, maxStreak: number): string =>
     `Played: ${played} · Won: ${won} · Streak: ${streak} (best ${maxStreak})`,
   shareStatsLine: (guesses: number, percent: number, hints: number): string => `🔎 ${guessCount(guesses)} · 🎯 ${percent}% accuracy · 💡 ${hintCount(hints)}`,
+  shareSolved: (corpusLabel: string): string => `I uncovered a redacted ${corpusLabel} docs page. Can you beat my score?`,
+  shareGaveUp: (corpusLabel: string): string => `This redacted ${corpusLabel} docs page beat me. Can you crack it?`,
   readSource: 'Read the official docs ↗',
   attribution: (license: string): string => `Text: ${license} · Excerpt, modified for this game`,
   redactedWord: (letters: number): string => `hidden word, ${plural('en', letters, { one: 'letter', other: 'letters' })}`,
@@ -47,6 +49,9 @@ export const en = {
   share: 'Copy result',
   shareCopied: 'Copied!',
   shareFailed: "Couldn't copy.",
+  shareOnLabel: 'Share on',
+  shareOnNetwork: (network: string): string => `Share on ${network}`,
+  shareNative: 'Share…',
   close: 'Close',
   footerBy: 'A game by',
   footerNote: 'Not affiliated with AWS or the CNCF. Every article shows its license, and links its source once the game is over.',

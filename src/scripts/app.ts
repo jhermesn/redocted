@@ -3,7 +3,7 @@ import { CORPUS_LABEL, parseCorpus } from '../lib/corpora.ts';
 import { articleIdFor, currentPuzzle, resolvePuzzle } from '../lib/daily.ts';
 import { accuracy, applyGuess, buildPuzzle, giveUp, hitsFor, takeHint, type GameState, type GuessResult, type Puzzle } from '../lib/game.ts';
 import { renderArticle } from '../lib/render.ts';
-import { shareText } from '../lib/share.ts';
+import { shareLinks, shareText, type ShareInput } from '../lib/share.ts';
 import { countsTowardStats, currentStreak, loadSettings, loadState, loadStats, recordResult, saveSettings, saveState, saveStats, type KeyValueStore } from '../lib/storage.ts';
 import * as v from 'valibot';
 import { ArticleSchema, CorpusIndexSchema } from '../lib/schemas.ts';
@@ -101,6 +101,27 @@ function renderGuessList(state: GameState, puzzle: Puzzle, onSelect: (word: stri
   byId('guess-list').replaceChildren(...rows.reverse());
 }
 
+function renderShareLinks(input: ShareInput): void {
+  const items = shareLinks(input, t).map(({ network, href }) => {
+    const link = Object.assign(document.createElement('a'), { href, textContent: network, target: '_blank', rel: 'noopener noreferrer', className: 'btn-ghost' });
+    link.setAttribute('aria-label', t.shareOnNetwork(network));
+    const item = document.createElement('li');
+    item.append(link);
+    return item;
+  });
+  byId('share-links').replaceChildren(...items);
+}
+
+// The Web Share API reaches every app installed on the device, mostly on mobile.
+function setUpNativeShare(input: ShareInput): void {
+  const button = byId<HTMLButtonElement>('share-native');
+  const data = { text: shareText(input, t) };
+  button.hidden = typeof navigator.share !== 'function' || !navigator.canShare?.(data);
+  button.onclick = () => {
+    navigator.share(data).catch(() => undefined);
+  };
+}
+
 async function main(): Promise<void> {
   const params = new URLSearchParams(window.location.search);
   const corpus = parseCorpus(params.get('c'));
@@ -180,6 +201,8 @@ async function main(): Promise<void> {
         shareButton.textContent = t.shareFailed;
       }
     };
+    setUpNativeShare(shareInput);
+    renderShareLinks(shareInput);
     if (!dialog.open) dialog.showModal();
   }
 
