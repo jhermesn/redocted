@@ -1,6 +1,6 @@
 import { createHash } from 'node:crypto';
-import type { CorpusId } from '../../src/lib/types.ts';
-import type { SourcePage } from './source.ts';
+import type { CorpusId, CorpusIndex } from '../../src/lib/types.ts';
+import type { SourceFile, SourcePage } from './source.ts';
 
 const KEY_LENGTH = 16;
 
@@ -23,4 +23,17 @@ export function pagesToBuild(corpus: CorpusId, pages: readonly SourcePage[], { e
   return pages.filter((page) =>
     refresh ? !frozenIds.has(page.id) : !existingFiles.has(`${bundleKey(corpus, page.id)}.json`),
   );
+}
+
+// What the browser needs from a manifest: each season's play order, with page
+// ids replaced by the opaque keys of their article files.
+export function corpusIndexOf(source: SourceFile): CorpusIndex {
+  return {
+    corpus: source.corpus,
+    seasons: source.seasons.map((season) => ({
+      startPuzzle: season.startPuzzle,
+      salt: season.salt,
+      ids: season.pages.map((page) => bundleKey(source.corpus, page.id)),
+    })),
+  };
 }

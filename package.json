@@ -37,7 +37,7 @@
   },
   "devDependencies": {
     "@types/escape-html": "^1.0.4",
-    "@types/node": "^24.19.0",
+    "@types/node": "^26.6.2",
     "@types/pluralize": "^0.0.33",
     "@types/stopword": "^2.0.3",
     "fast-shuffle": "^6.2.1",
