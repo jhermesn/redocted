@@ -1,13 +1,14 @@
 import { getMessages, parseLocale, type Messages } from '../i18n/index.ts';
-import { CORPUS_LABEL, parseCorpus } from '../lib/corpora.ts';
+import { CORPORA, CORPUS_LABEL, parseCorpus } from '../lib/corpora.ts';
 import { articleIdFor, currentPuzzle, resolvePuzzle } from '../lib/daily.ts';
-import { accuracy, applyGuess, buildPuzzle, giveUp, hitsFor, takeHint, type GameState, type GuessResult, type Puzzle } from '../lib/game.ts';
+import { ENDLESS_MODE, endlessPool, pickEndless } from '../lib/endless.ts';
+import { accuracy, applyGuess, buildPuzzle, EMPTY_STATE, giveUp, hitsFor, takeHint, type GameState, type GuessResult, type Puzzle } from '../lib/game.ts';
 import { renderArticle } from '../lib/render.ts';
 import { shareLinks, shareText, type ShareInput } from '../lib/share.ts';
-import { countsTowardStats, currentStreak, loadSettings, loadState, loadStats, recordResult, saveSettings, saveState, saveStats, type KeyValueStore } from '../lib/storage.ts';
+import { countsTowardStats, currentStreak, loadEndlessRound, loadSettings, loadState, loadStats, recordResult, saveEndlessRound, saveSettings, saveState, saveStats, type EndlessRound, type KeyValueStore } from '../lib/storage.ts';
 import * as v from 'valibot';
 import { ArticleSchema, CorpusIndexSchema } from '../lib/schemas.ts';
-import type { Article } from '../lib/types.ts';
+import type { Article, CorpusId, CorpusIndex } from '../lib/types.ts';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const t = getMessages(parseLocale(document.documentElement.dataset.locale));
@@ -66,6 +67,21 @@ function pinPuzzleOnLanguageLinks(query: string): void {
   document.querySelectorAll<HTMLAnchorElement>('[data-locale-link]').forEach((link) => {
     link.search = query;
   });
+}
+
+function resolveEndlessRound(store: KeyValueStore | null, corpus: CorpusId, index: CorpusIndex, today: number): EndlessRound {
+  const pool = endlessPool(index, today);
+  const saved = loadEndlessRound(store, corpus);
+  if (saved && pool.includes(saved.articleId)) return saved;
+  return { articleId: pickEndless(pool, null, Math.random), state: EMPTY_STATE };
+}
+
+function setUpModeNavigation(corpus: CorpusId, endless: boolean): void {
+  const modeLink = byId<HTMLAnchorElement>('mode-link');
+  modeLink.href = endless ? `?c=${corpus}` : `?c=${corpus}&m=${ENDLESS_MODE}`;
+  modeLink.textContent = endless ? t.dailyMode : t.endlessMode;
+  if (!endless) return;
+  CORPORA.forEach((id) => byId(`tab-${id}`).setAttribute('href', `?c=${id}&m=${ENDLESS_MODE}`));
 }
 
 function setUpLetterCounts(store: KeyValueStore | null, articleEl: HTMLElement): void {
@@ -127,19 +143,22 @@ async function main(): Promise<void> {
   const corpus = parseCorpus(params.get('c'));
   const today = currentPuzzle(new Date());
   const puzzle = resolvePuzzle(params.get('p'), today);
+  const endless = params.get('m') === ENDLESS_MODE;
   const store = browserStore();
 
-  pinPuzzleOnLanguageLinks(`?c=${corpus}&p=${puzzle}`);
+  pinPuzzleOnLanguageLinks(endless ? `?c=${corpus}&m=${ENDLESS_MODE}` : `?c=${corpus}&p=${puzzle}`);
   byId(`tab-${corpus}`).setAttribute('aria-current', 'page');
+  setUpModeNavigation(corpus, endless);
   const index = await fetchValid(`corpus/${corpus}/index.json`, CorpusIndexSchema);
-  const articleId = articleIdFor(index, puzzle);
+  const round = endless ? resolveEndlessRound(store, corpus, index, today) : null;
+  const articleId = round?.articleId ?? articleIdFor(index, puzzle);
   const article = await fetchValid(`corpus/${corpus}/${articleId}.json`, ArticleSchema);
   const board = buildPuzzle(article);
   const slot = { corpus, puzzle, articleId };
   renderAttribution(byId('attribution'), article);
   renderAttribution(byId('result-attribution'), article);
 
-  let state = loadState(store, slot);
+  let state = round?.state ?? loadState(store, slot);
   let highlight: string | null = null;
   let hitCursor = -1;
 
@@ -160,7 +179,7 @@ async function main(): Promise<void> {
   function render(): void {
     articleEl.innerHTML = renderArticle(board, state, { highlight, labels: { redacted: t.redactedWord } });
     renderGuessList(state, board, select);
-    byId('meta').textContent = t.meta(CORPUS_LABEL[corpus], puzzle, state.guesses.length);
+    byId('meta').textContent = endless ? t.metaEndless(CORPUS_LABEL[corpus], state.guesses.length) : t.meta(CORPUS_LABEL[corpus], puzzle, state.guesses.length);
     const finished = isFinished(state);
     const giveUpButton = byId<HTMLButtonElement>('give-up');
     giveUpButton.disabled = finished;
@@ -187,6 +206,9 @@ async function main(): Promise<void> {
     const ratio = accuracy(state, board);
     const stats = loadStats(store, corpus);
     const shareInput = { corpus, puzzle, state, accuracyRatio: ratio, url: `${window.location.origin}${window.location.pathname}?c=${corpus}&p=${puzzle}` };
+    byId('result-stats').hidden = endless;
+    byId('result-share').hidden = endless;
+    byId('result-next').hidden = !endless;
     byId('result-title').textContent = state.solved ? t.resultSolved(article.title) : t.resultGaveUp(article.title);
     byId('result-summary').textContent = t.resultSummary(state.guesses.length, Math.round(ratio * 100), state.hints.length);
     byId('result-stats').textContent = t.resultStats(stats.played, stats.won, currentStreak(stats, today), stats.maxStreak);
@@ -208,11 +230,12 @@ async function main(): Promise<void> {
 
   function commit(next: GameState): void {
     const justFinished = !isFinished(state) && isFinished(next);
-    if (countsTowardStats(state, next, { puzzle, today })) {
+    if (!endless && countsTowardStats(state, next, { puzzle, today })) {
       saveStats(store, corpus, recordResult(loadStats(store, corpus), puzzle, next.solved));
     }
     state = next;
-    saveState(store, slot, state);
+    if (endless) saveEndlessRound(store, corpus, { articleId, state });
+    else saveState(store, slot, state);
     render();
     if (justFinished) showResult();
   }
@@ -257,9 +280,18 @@ async function main(): Promise<void> {
   });
   byId('show-result').addEventListener('click', showResult);
 
+  // A new round is saved and the page reloads, so the article loads like on a first visit.
+  function startNextRound(): void {
+    saveEndlessRound(store, corpus, { articleId: pickEndless(endlessPool(index, today), articleId, Math.random), state: EMPTY_STATE });
+    window.location.reload();
+  }
+  byId('next-article').hidden = !endless;
+  byId('next-article').addEventListener('click', startNextRound);
+  byId('result-next').addEventListener('click', startNextRound);
+
   const previous = byId<HTMLAnchorElement>('prev');
-  if (puzzle > 1) previous.href = `?c=${corpus}&p=${puzzle - 1}`;
-  else previous.hidden = true;
+  if (endless || puzzle <= 1) previous.hidden = true;
+  else previous.href = `?c=${corpus}&p=${puzzle - 1}`;
 
   render();
 }
