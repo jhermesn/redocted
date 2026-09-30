@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.8.0](https://github.com/jhermesn/redocted/compare/v0.7.0...v0.8.0) (2026-09-30)
+
+
+### Features
+
+* add a local endless mode ([6d7e927](https://github.com/jhermesn/redocted/commit/6d7e9279da2c01bb4ca8c6d9dea60bac35afd8da))
+
 ## [0.7.0](https://github.com/jhermesn/redocted/compare/v0.6.0...v0.7.0) (2026-09-29)
 
 
