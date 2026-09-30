@@ -73,10 +73,13 @@ const t = getMessages(locale);
 
       <div class="mt-4 flex flex-wrap gap-2 text-sm">
         <a id="prev" class="btn-ghost">{t.previous}</a>
+        <button id="next-article" class="btn-ghost" type="button" hidden>{t.nextArticle}</button>
         <button id="hint" class="btn-ghost" type="button">💡 {t.hint}</button>
         <button id="give-up" class="btn-ghost" type="button">{t.giveUp}</button>
         <button id="show-result" class="btn-ghost" type="button" hidden>{t.showResult}</button>
       </div>
+
+      <a id="mode-link" class="btn-ghost mt-4 inline-block text-sm"></a>
 
       <label class="mt-4 flex items-center gap-2 text-sm text-ink-300">
         <input id="show-counts" type="checkbox" />
@@ -103,14 +106,17 @@ const t = getMessages(locale);
       <a id="result-source" class="text-brand-purple underline" target="_blank" rel="noopener noreferrer">{t.readSource}</a>
     </p>
     <p id="result-attribution" class="mt-2 text-xs text-ink-300"></p>
-    <div class="mt-4 flex flex-wrap gap-2">
-      <button id="share" class="btn-primary" type="button">{t.share}</button>
-      <button id="share-native" class="btn-ghost" type="button" hidden>{t.shareNative}</button>
+    <div id="result-share">
+      <div class="mt-4 flex flex-wrap gap-2">
+        <button id="share" class="btn-primary" type="button">{t.share}</button>
+        <button id="share-native" class="btn-ghost" type="button" hidden>{t.shareNative}</button>
+      </div>
+      <nav class="mt-4 text-sm" aria-labelledby="share-on-label">
+        <p id="share-on-label" class="text-ink-300">{t.shareOnLabel}</p>
+        <ul id="share-links" class="mt-2 flex flex-wrap gap-2"></ul>
+      </nav>
     </div>
-    <nav class="mt-4 text-sm" aria-labelledby="share-on-label">
-      <p id="share-on-label" class="text-ink-300">{t.shareOnLabel}</p>
-      <ul id="share-links" class="mt-2 flex flex-wrap gap-2"></ul>
-    </nav>
+    <button id="result-next" class="btn-primary mt-4" type="button" hidden>{t.nextArticle}</button>
   </dialog>
 
   <footer class="mx-auto max-w-6xl px-4 pb-32 text-xs text-ink-300 lg:pb-8">

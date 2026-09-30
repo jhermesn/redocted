@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { EMPTY_STATE } from '../src/lib/game.ts';
-import { countsTowardStats, currentStreak, EMPTY_STATS, loadSettings, loadState, loadStats, recordResult, saveSettings, saveState, saveStats, type KeyValueStore } from '../src/lib/storage.ts';
+import { countsTowardStats, currentStreak, EMPTY_STATS, loadEndlessRound, loadSettings, loadState, loadStats, recordResult, saveEndlessRound, saveSettings, saveState, saveStats, type KeyValueStore } from '../src/lib/storage.ts';
 
 function memoryStore(): KeyValueStore {
   const data = new Map<string, string>();
@@ -59,6 +59,31 @@ describe('game state persistence', () => {
       expect(loadState(store, slot)).toEqual(EMPTY_STATE);
     },
   );
+});
+
+describe('endless round persistence', () => {
+  const round = { articleId: 'abc', state: { ...EMPTY_STATE, guesses: ['role'] } };
+
+  it('given a saved round, loads it back per corpus', () => {
+    const store = memoryStore();
+    saveEndlessRound(store, 'aws', round);
+    expect(loadEndlessRound(store, 'aws')).toEqual(round);
+    expect(loadEndlessRound(store, 'k8s')).toBeNull();
+  });
+
+  it('given a second round, replaces the first', () => {
+    const store = memoryStore();
+    saveEndlessRound(store, 'aws', round);
+    saveEndlessRound(store, 'aws', { articleId: 'def', state: EMPTY_STATE });
+    expect(loadEndlessRound(store, 'aws')?.articleId).toBe('def');
+  });
+
+  it('given a corrupted value or no storage, returns null', () => {
+    const store = memoryStore();
+    store.setItem('redocted:v1:aws:endless', '{"articleId":1}');
+    expect(loadEndlessRound(store, 'aws')).toBeNull();
+    expect(loadEndlessRound(null, 'aws')).toBeNull();
+  });
 });
 
 describe('stats persistence', () => {

@@ -23,6 +23,12 @@ export interface GameSlot {
   articleId: string;
 }
 
+// Endless mode keeps a single round per board, so old rounds never pile up.
+export interface EndlessRound {
+  articleId: string;
+  state: GameState;
+}
+
 export interface Settings {
   showLetterCounts: boolean;
 }
@@ -34,6 +40,7 @@ const GameStateSchema = v.object({
   solved: v.boolean(),
   gaveUp: v.boolean(),
 });
+const EndlessRoundSchema = v.object({ articleId: v.pipe(v.string(), v.nonEmpty()), state: GameStateSchema });
 const CountSchema = v.pipe(v.number(), v.integer(), v.minValue(0));
 const StatsSchema = v.object({
   played: CountSchema,
@@ -56,6 +63,14 @@ export function loadState(store: KeyValueStore | null, slot: GameSlot): GameStat
 
 export function saveState(store: KeyValueStore | null, slot: GameSlot, state: GameState): void {
   writeJson(store, gameKey(slot), state);
+}
+
+export function loadEndlessRound(store: KeyValueStore | null, corpus: CorpusId): EndlessRound | null {
+  return readValid(store, endlessKey(corpus), EndlessRoundSchema);
+}
+
+export function saveEndlessRound(store: KeyValueStore | null, corpus: CorpusId, round: EndlessRound): void {
+  writeJson(store, endlessKey(corpus), round);
 }
 
 export function loadStats(store: KeyValueStore | null, corpus: CorpusId): Stats {
@@ -100,6 +115,10 @@ export function saveSettings(store: KeyValueStore | null, settings: Settings): v
 
 function gameKey({ corpus, puzzle, articleId }: GameSlot): string {
   return `${PREFIX}:${corpus}:game:${puzzle}:${articleId}`;
+}
+
+function endlessKey(corpus: CorpusId): string {
+  return `${PREFIX}:${corpus}:endless`;
 }
 
 function statsKey(corpus: CorpusId): string {

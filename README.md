@@ -38,6 +38,9 @@ does the same with Wikipedia.
   different messages.
 - A new puzzle comes out every day at 00:00 UTC, the same for everyone. Two
   boards: **AWS** and **Kubernetes**. Earlier puzzles stay playable.
+- **Endless** mode plays random articles one after another, without waiting for
+  the next day. It lives only in your browser and never touches the daily stats
+  or streak.
 
 Articles are always in English. The interface is in English and Portuguese.
 
