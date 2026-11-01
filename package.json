@@ -29,7 +29,7 @@
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",
     "@tailwindcss/vite": "^4.3.3",
-    "astro": "^7.3.5",
+    "astro": "^7.4.2",
     "country-flag-icons": "^1.6.20",
     "escape-html": "^1.0.3",
     "stopword": "^3.1.5",
@@ -38,16 +38,16 @@
   },
   "devDependencies": {
     "@types/escape-html": "^1.0.4",
-    "@types/node": "^26.6.2",
+    "@types/node": "^26.6.5",
     "@types/pluralize": "^0.0.33",
     "@types/stopword": "^2.0.3",
     "fast-shuffle": "^6.2.1",
-    "linkedom": "^0.18.13",
+    "linkedom": "^0.18.14",
     "p-limit": "^7.3.3",
     "p-retry": "^8.0.1",
     "pluralize": "^8.0.0",
     "typescript": "^7.0.2",
-    "vitest": "^5.0.2",
+    "vitest": "^5.0.5",
     "wink-lemmatizer": "^3.0.4",
     "wink-lexicon": "^2.2.0"
   }
