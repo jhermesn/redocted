@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.10.0](https://github.com/jhermesn/redocted/compare/v0.9.0...v0.10.0) (2026-11-16)
+
+
+### Features
+
+* **corpus:** add newly discovered documentation pages ([cb52e73](https://github.com/jhermesn/redocted/commit/cb52e7338c8e9072d188a2f78391d688237c1632))
+* **corpus:** add newly discovered documentation pages ([ce19e18](https://github.com/jhermesn/redocted/commit/ce19e182efdd30d098e8fa2f8569970cf4c516d6))
+
 ## [0.9.0](https://github.com/jhermesn/redocted/compare/v0.8.0...v0.9.0) (2026-10-03)
 
 
