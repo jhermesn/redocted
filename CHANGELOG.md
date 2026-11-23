@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.10.1](https://github.com/jhermesn/redocted/compare/v0.10.0...v0.10.1) (2026-11-23)
+
+
+### Bug Fixes
+
+* **deps:** update Astro to 7.4.8 for the attribute injection advisory ([#18](https://github.com/jhermesn/redocted/issues/18)) ([7fc5910](https://github.com/jhermesn/redocted/commit/7fc5910963cb579dd5ff40520731459e754d4411))
+
 ## [0.10.0](https://github.com/jhermesn/redocted/compare/v0.9.0...v0.10.0) (2026-11-16)
 
 
