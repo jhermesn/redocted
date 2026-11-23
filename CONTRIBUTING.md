@@ -53,9 +53,12 @@ again, because a pull request can be merged after its season was due to
 start. The test suite also validates every committed article (schema, source
 host, license, and the same quality checks the builder applies).
 
-The monthly `corpus` workflow opens its pull request with the repository's
-`GITHUB_TOKEN`, which needs **Settings → Actions → General → Allow GitHub
-Actions to create and approve pull requests**.
+The monthly `corpus` workflow and release-please open their pull requests with
+a token from a GitHub App installed on the repository, so CI runs on them like
+on any other pull request. The workflows read the App's client ID from the
+`AUTOMATION_APP_CLIENT_ID` variable and its private key from the
+`AUTOMATION_APP_PRIVATE_KEY` secret. The App needs read and write access to
+contents and pull requests.
 
 ## Releases
 

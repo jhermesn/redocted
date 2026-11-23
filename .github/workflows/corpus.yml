@@ -2,8 +2,8 @@ name: corpus
 
 # Once a month, finds new pages in the AWS and Kubernetes sitemaps and opens
 # (or updates) a pull request that adds them as a new season starting two
-# weeks later. Requires Settings → Actions → General → "Allow GitHub Actions to
-# create and approve pull requests".
+# weeks later. The pull request is opened with a GitHub App token, so its CI runs
+# like any other pull request's.
 on:
   schedule:
     - cron: '0 9 1 * *'
@@ -21,9 +21,7 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 45
     permissions:
-      contents: write
-      pull-requests: write
-      actions: write
+      contents: read
     steps:
       # No token left in .git/config and no dependency install scripts while
       # outside HTML is parsed; only the pull request step gets write access.
@@ -42,9 +40,19 @@ jobs:
       - name: Discover and build new articles
         run: npm run corpus
 
-      - id: pr
-        uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8.1.1
+      # Created after the outside HTML is parsed, so only the pull request step
+      # holds a write token. GITHUB_TOKEN would not start CI on the pull request.
+      - id: app-token
+        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3.3.0
         with:
+          client-id: ${{ vars.AUTOMATION_APP_CLIENT_ID }}
+          private-key: ${{ secrets.AUTOMATION_APP_PRIVATE_KEY }}
+          permission-contents: write
+          permission-pull-requests: write
+
+      - uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8.1.1
+        with:
+          token: ${{ steps.app-token.outputs.token }}
           branch: corpus/next
           add-paths: corpus
           commit-message: 'feat(corpus): add newly discovered documentation pages'
@@ -54,10 +62,3 @@ jobs:
             season. Merge before the season starts (see `startPuzzle` in
             `corpus/<board>/manifest.json`); after that, CI and the deploy refuse it and
             this workflow has to run again.
-
-      # Pull requests opened with GITHUB_TOKEN do not start other workflows.
-      - name: Run CI on the pull request
-        if: steps.pr.outputs.pull-request-operation == 'created' || steps.pr.outputs.pull-request-operation == 'updated'
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: gh workflow run ci.yml --repo "$GITHUB_REPOSITORY" --ref corpus/next
